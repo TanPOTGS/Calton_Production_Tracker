@@ -2,6 +2,8 @@ import {
   useSelector
 } from 'react-redux'
 import DashboardGauge from '../components/DashboardGauge/DashboardGauge'
+import DashboardNumber from '../components/DashboardNumber/DashboardNumber';
+import DashboardDepartmentCount from '../components/DashboardDepartmentCount/DashboardDepartmentCount'
 import styled from 'styled-components';
 
 function ProductionCharts() {
@@ -16,51 +18,48 @@ function ProductionCharts() {
         <DashboardGauge 
           gaugeTitle={"Partner Gearbox Sales"}
           startingNumber={0}
-          endingNumber={50}
-          currentDeg={0}
+          endingNumber={2}
+          data={0}
         />
         <DashboardGauge 
           gaugeTitle={"Partner Case Sales"}
           startingNumber={0}
-          endingNumber={50}
-          currentDeg={70}
+          endingNumber={21}
+          data={18}
         />
         <DashboardGauge 
           gaugeTitle={"Direct Gearbox Sales"}
           startingNumber={0}
-          endingNumber={50}
-          currentDeg={25}
+          endingNumber={14}
+          data={10}
         />
         <DashboardGauge 
           gaugeTitle={"Direct Case Sales"}
           startingNumber={0}
-          endingNumber={50}
-          currentDeg={44}
+          endingNumber={14}
+          data={12}
         />
         <DashboardGauge 
-          gaugeTitle={"Partner Gearbox Sales"}
+          gaugeTitle={"Weekly Sales"}
           startingNumber={0}
           endingNumber={50}
-          currentDeg={90}
+          data={35}
         />
         <DashboardGauge 
-          gaugeTitle={"Partner Case Sales"}
+          gaugeTitle={"Weekly Shipped"}
           startingNumber={0}
           endingNumber={50}
-          currentDeg={70}
+          data={48}
         />
-        <DashboardGauge 
-          gaugeTitle={"Direct Case Sales"}
+        <DashboardNumber 
+          numberTitle={"Cases In Production"}
           startingNumber={0}
-          endingNumber={50}
-          currentDeg={-20}
+          endingNumber={0}
+          number={398}
         />
-        <DashboardGauge 
-          gaugeTitle={"Direct Case Sales"}
-          startingNumber={0}
-          endingNumber={50}
-          currentDeg={44}
-        />
+        <StyledCountContainer>
+          <DashboardDepartmentCount />
+        </StyledCountContainer>
       </StyledGaugesContainer>
     </StyledChartsContainer>
   )
@@ -76,12 +75,16 @@ const StyledWelcomeContainer = styled.section`
   background-color: #4a4a4a;
   color: #ffffff;
   padding: 10px;
+  margin: 0 0 20px 0;
 `
 
 const StyledGaugesContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  // justify-content: space-evenly;
-  height: 100%;
-  width: 100%;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(4, 350px);
+  justify-content: space-evenly;
+`
+
+const StyledCountContainer = styled.div`
+  grid-column: span 4;
 `
