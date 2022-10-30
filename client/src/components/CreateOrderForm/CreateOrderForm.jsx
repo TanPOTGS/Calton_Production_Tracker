@@ -61,7 +61,7 @@ function CreateOrderForm({ closeModal }) {
     shippingCountry: '',
     shippingState: '',
     shippingEmail: '',
-    shippingPhone: ''
+    shippingPhone: '',
   })
   
   const {
@@ -127,26 +127,30 @@ function CreateOrderForm({ closeModal }) {
       engraving,
       pricing,
       orderStatus,
-      billingFirstName,
-      billingLastName,
-      billingCompany,
-      billingAddress,
-      billingCity,
-      billingPostcode,
-      billingCountry,
-      billingState,
-      billingEmail,
-      billingPhone,
-      shippingFirstName,
-      shippingLastName,
-      shippingCompany,
-      shippingAddress,
-      shippingCity,
-      shippingPostcode,
-      shippingCountry,
-      shippingState,
-      shippingEmail,
-      shippingPhone
+      billing: {
+        firstName: billingFirstName,
+        lastName: billingLastName,
+        company: billingCompany,
+        address: billingAddress,
+        city: billingCity,
+        postcode: billingPostcode,
+        country: billingCountry,
+        state: billingState,
+        email: billingEmail,
+        phone: billingPhone
+      },
+      shipping: {
+        firstName: shippingFirstName,
+        lastName: shippingLastName,
+        company: shippingCompany,
+        address: shippingAddress,
+        city: shippingCity,
+        postcode: shippingPostcode,
+        country: shippingCountry,
+        state: shippingState,
+        email: shippingEmail,
+        phone: shippingPhone
+      }
     }
 
     dispatch(createNewOrder(orderData))
@@ -182,7 +186,7 @@ function CreateOrderForm({ closeModal }) {
       shippingCountry: '',
       shippingState: '',
       shippingEmail: '',
-      shippingPhone: ''
+      shippingPhone: '',
     })
 
     if(isSuccess) {

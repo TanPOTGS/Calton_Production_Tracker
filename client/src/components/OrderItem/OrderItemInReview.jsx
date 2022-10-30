@@ -6,7 +6,6 @@ import {
   MdDelete
 } from 'react-icons/md'
 import styled from 'styled-components';
-import { ThemeProvider } from 'styled-components';
 
 function OrderItemInReview(props) {
   const [isChecked, setCheckbox] = useState(false)
@@ -130,7 +129,7 @@ const StyledOrderItem = styled.tr`
     background-color: #f3f3f3;
   }
   &:hover > td {
-    background-color: rgba(150, 153, 153, .6);
+    background-color: rgba(150, 153, 153, .3);
   }
 `
 

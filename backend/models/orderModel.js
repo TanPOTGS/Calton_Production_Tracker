@@ -2,18 +2,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
+
 const OrderSchema = new Schema({
   // user: {
   //   type: mongoose.Schema.Types.ObjectId,
   //   required: true,
   //   ref: 'User'
   // },
-  reviewStatus: {
-    type: String
+  orderStatus: {
+    type: String,
+    default: 'open'
   },
   orderCurrentState: {
     type: String,
     default: 'review'
+  },
+  reviewStatus: {
+    type: String,
+    default: 'Hold'
   },
   submitDate: {
     type: Date
@@ -36,78 +42,140 @@ const OrderSchema = new Schema({
     type: String
   },
   caltonRep: {
-    type: String
+    type: String,
+    default: ''
+  },
+  newTemplate: {
+    type: Boolean,
+    default: false
+  },
+  expedite: {
+    type: Boolean,
+    default: false
+  },
+  containsMerch: {
+    type: Boolean,
+    default: false
   },
   engraving: {
-    type: String
+    type: String,
+    default: 'N/A'
+  },
+  poNumber: {
+    type: String,
+    default: 'N/A'
   },
   pricing: {
-    type: String
-  },
-  orderStatus: {
     type: String,
-    default: 'open'
+    default: ''
   },
-  billingFirstName: {
-    type: String
+  billing: {
+    firstName: {
+      type: String,
+      default: ''
+    },
+    lastName: {
+      type: String,
+      default: ''
+    },
+    company: {
+      type: String,
+      default: ''
+    },
+    address: {
+      type: String,
+      default: ''
+    },
+    city: {
+      type: String,
+      default: ''
+    },
+    postcode: {
+      type: String,
+      default: ''
+    },
+    country: {
+      type: String,
+      default: ''
+    },
+    state: {
+      type: String,
+      default: ''
+    },
+    email: {
+      type: String,
+      default: ''
+    },
+    phone: {
+      type: String,
+      default: ''
+    },
   },
-  billingLastName: {
-    type: String
+  shipping: {
+    firstName: {
+      type: String,
+      default: ''
+    },
+    lastName: {
+      type: String,
+      default: ''
+    },
+    company: {
+      type: String,
+      default: ''
+    },
+    address: {
+      type: String,
+      default: ''
+    },
+    city: {
+      type: String,
+      default: ''
+    },
+    postcode: {
+      type: String,
+      default: ''
+    },
+    country: {
+      type: String,
+      default: ''
+    },
+    state: {
+      type: String,
+      default: ''
+    },
+    email: {
+      type: String,
+      default: ''
+    },
+    phone: {
+      type: String,
+      default: ''
+    },
   },
-  billingCompany: {
-    type: String
-  },
-  billingAddress: {
-    type: String
-  },
-  billingCity: {
-    type: String
-  },
-  billingPostcode: {
-    type: String
-  },
-  billingCountry: {
-    type: String
-  },
-  billingState: {
-    type: String
-  },
-  billingEmail: {
-    type: String
-  },
-  billingPhone: {
-    type: String
-  },
-  shippingFirstName: {
-    type: String
-  },
-  shippingLastName: {
-    type: String
-  },
-  shippingCompany: {
-    type: String
-  },
-  shippingAddress: {
-    type: String
-  },
-  shippingCity: {
-    type: String
-  },
-  shippingPostcode: {
-    type: String
-  },
-  shippingCountry: {
-    type: String
-  },
-  shippingState: {
-    type: String
-  },
-  shippingEmail: {
-    type: String
-  },
-  shippingPhone: {
-    type: String
-  },
+  comments: [
+    {
+      body: String
+    }
+  ],
+  fiberglass: {
+    siDate: {
+      type: Date,
+      default: ''
+    },
+    siEmployee: {
+      type: String,
+      default: ''
+    },
+    soDate: {
+      type: Date,
+      default: ''
+    },
+    soEmployee: {
+      type: String,
+      default: ''
+    },
+  }
 }, 
 {
   timestamps: true

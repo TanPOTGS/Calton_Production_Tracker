@@ -1,6 +1,7 @@
 //This is the Orders Review page.
 
 import {
+  useState,
   useEffect
 } from 'react';
 import {
@@ -21,6 +22,42 @@ import OrderItemInReview from '../components/OrderItem/OrderItemInReview';
 import styled from 'styled-components';
 
 function OrderReview(props) {
+  const [sidebarData, setSidebarData] = useState({
+    orderNumber: '1000-0',
+    billing: {
+      firstName: 'Paul',
+      lastName: 'Roque',
+      company: 'Calton Cases',
+      address: '6203 Waycross Dr.',
+      city: 'Austin',
+      postcode: '78745',
+      country: 'United States',
+      state: 'Texas',
+      email: 'paulroque13@gmail.com',
+      phone: '512-573-2335'
+    },
+    shipping: {
+      firstName: 'Paul',
+      lastName: 'Roque',
+      company: 'Calton Cases',
+      address: '6203 Waycross Dr.',
+      city: 'Austin',
+      postcode: '78745',
+      country: 'United States',
+      state: 'Texas',
+      email: 'paulroque13@gmail.com',
+      phone: '512-573-2335'
+    },
+    comments: []
+  })
+
+  const {
+    orderNumber,
+    billing,
+    shipping,
+    comments
+  } = sidebarData
+
   const {
     displayModal,
     modalType,
@@ -109,66 +146,114 @@ function OrderReview(props) {
         modalType={modalType}
         orderDataForModal={orderDataForModal}
       />}
-      <StyledTableContainer>
-        <StyledOrderTable>
-          <StyledOrderTableHead>
-            <StyledOrderTableHeadRow>
-              <StyledOrderTableHeadRowSection>Actions</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Review Status</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Submit Date</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Review Date</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Eligible For Production On</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>WC Order Number</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Model Code</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Customer</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Calton Rep</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Mold</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Standard Exterior Color</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>RAL#</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection></StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Exterior Finish</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Glitter Color</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Splatter One</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Splatter Two</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Splatter Three</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection></StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Taper</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Base Cut Depth</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection></StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Hardware Configuration</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection></StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Template</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Interior Build (Gearboxes only)</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Interior Color</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection></StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Nameplate Type</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Accessories</StyledOrderTableHeadRowSection>
-              <StyledOrderTableHeadRowSection>Shipping Method</StyledOrderTableHeadRowSection>
-            </StyledOrderTableHeadRow>
-          </StyledOrderTableHead>
-          {orders.length > 0 ? (
-            <StyledOrderTableBody>
-              {orders.map((order) => (order.orderCurrentState === "review" &&
-                <OrderItemInReview 
-                  key={order._id}
-                  order={order}
-                  toggleEditModal={toggleEditOrderModal}
-                  toggleDeleteModal={toggleDeleteOrderModal}
-                  handleOrderSelect={handleOrderSelect}
-                />
-              ))}
-            </StyledOrderTableBody>
-          ) : (
-            <tbody>
-              <tr>
-                <td>
-                  {/* <h1>There are no orders to display</h1> */}
-                </td>
-              </tr>
-            </tbody>
-          )}
-        </StyledOrderTable>
-      </StyledTableContainer>
+      <StyledOrdersContainer>
+        <StyledTableContainer>
+          <StyledOrderTable>
+            <StyledOrderTableHead>
+              <StyledOrderTableHeadRow>
+                <StyledOrderTableHeadRowSection>Actions</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Review Status</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Submit Date</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Review Date</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Eligible For Production On</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>WC Order Number</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Model Code</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Customer</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Calton Rep</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Mold</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Standard Exterior Color</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>RAL#</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection></StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Exterior Finish</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Glitter Color</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Splatter One</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Splatter Two</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Splatter Three</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection></StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Taper</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Base Cut Depth</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection></StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Hardware Configuration</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection></StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Template</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Interior Build (Gearboxes only)</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Interior Color</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection></StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Nameplate Type</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Accessories</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Shipping Method</StyledOrderTableHeadRowSection>
+              </StyledOrderTableHeadRow>
+            </StyledOrderTableHead>
+            {orders.length > 0 ? (
+              <StyledOrderTableBody>
+                {orders.map((order) => (order.orderCurrentState === "review" &&
+                  <OrderItemInReview 
+                    key={order._id}
+                    order={order}
+                    toggleEditModal={toggleEditOrderModal}
+                    toggleDeleteModal={toggleDeleteOrderModal}
+                    handleOrderSelect={handleOrderSelect}
+                  />
+                ))}
+              </StyledOrderTableBody>
+            ) : (
+              <tbody>
+                <tr>
+                  <td>
+                    {/* <h1>There are no orders to display</h1> */}
+                  </td>
+                </tr>
+              </tbody>
+            )}
+          </StyledOrderTable>
+        </StyledTableContainer>
+        <StyledSidebarContainer>
+          <StyledSidebarHeader>
+            <StyledSidebarTitle>Notes</StyledSidebarTitle>
+          </StyledSidebarHeader>
+          <StyledSidebarBody>
+            <p>{orderNumber}</p>
+            <h2>Billing:</h2>
+            <p>{billing.firstName}</p>
+            <p>{billing.lastName}</p>
+            <p>{billing.company}</p>
+            <p>{billing.address}</p>
+            <p>{billing.city}</p>
+            <p>{billing.postcode}</p>
+            <p>{billing.country}</p>
+            <p>{billing.state}</p>
+            <p>{billing.email}</p>
+            <p>{billing.phone}</p>
+            <h2>Shipping:</h2>
+            <p>{shipping.firstName}</p>
+            <p>{shipping.lastName}</p>
+            <p>{shipping.company}</p>
+            <p>{shipping.address}</p>
+            <p>{shipping.city}</p>
+            <p>{shipping.postcode}</p>
+            <p>{shipping.country}</p>
+            <p>{shipping.state}</p>
+            <p>{shipping.email}</p>
+            <p>{shipping.phone}</p>
+            <h2>Comments:</h2>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+            <p>comment</p>
+          </StyledSidebarBody>
+        </StyledSidebarContainer>
+      </StyledOrdersContainer>
     </StyledOrderReviewViewContainer>
   )
 }
@@ -203,10 +288,14 @@ const StyledMenuButton = styled.button`
   }
 `
 
+const StyledOrdersContainer = styled.div`
+  height: 95%;
+  display: flex;
+`
+
 const StyledTableContainer = styled.div`
   overflow: scroll;
-  height: 95%;
-  width: 100%;
+  width: 78%;
   &::-webkit-scrollbar {
     width: .5vw;
     height: 1vh;
@@ -248,4 +337,38 @@ const StyledOrderTableHeadRowSection = styled.th`
 
 const StyledOrderTableBody = styled.tbody`
 
+`
+
+const StyledSidebarContainer = styled.div`
+  background-color: #ffffff;
+  width: 22%;
+  height: 100%;
+`
+
+const StyledSidebarHeader = styled.div`
+  // border-bottom: 5px solid #009879;
+  background-color: #e8e6e6;
+  height: 10%;
+`
+
+const StyledSidebarTitle = styled.h1`
+  padding: 20px 0 20px 20px;
+`
+
+const StyledSidebarBody = styled.div`
+  overflow: scroll;
+  height: 90%;
+  &::-webkit-scrollbar {
+    width: .5vw;
+    height: 1vh;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #88f7ba;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #009879;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: #009879;
+  }
 `
