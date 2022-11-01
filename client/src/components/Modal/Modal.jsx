@@ -1,6 +1,8 @@
 import CreateOrderForm from '../CreateOrderForm/CreateOrderForm';
 import DeleteMessage from '../DeleteMessage/DeleteMessage';
 import UpdateOrderForm from '../UpdateOrderForm/UpdateOrderForm';
+import AddCommentForm from '../AddCommentForm/AddCommentForm';
+import UpdateContactsForm from '../UpdateContactsForm/UpdateContactsForm';
 import styled from 'styled-components';
 
 function Modal(modalProps) {
@@ -26,6 +28,16 @@ function Modal(modalProps) {
             closeModal={closeModal}
             orderDataForModal={orderDataForModal}
           />
+      case 'editContactsForm':
+        return <UpdateContactsForm
+          closeModal={closeModal}
+          orderDataForModal={orderDataForModal}
+        />
+      case 'addCommentForm':
+        return <AddCommentForm
+          closeModal={closeModal}
+          orderDataForModal={orderDataForModal}
+        />
       default:
         console.log('default');
     }

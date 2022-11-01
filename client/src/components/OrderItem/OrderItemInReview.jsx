@@ -14,7 +14,8 @@ function OrderItemInReview(props) {
     order,
     toggleEditModal,
     toggleDeleteModal,
-    handleOrderSelect
+    handleOrderSelect,
+    handleOrderNotesDisplay
   } = props
 
   let moldCode = '--'
@@ -58,6 +59,23 @@ function OrderItemInReview(props) {
     nameplateCode = reGroups[14]
     caseCoverCode = reGroups[15]
     shippingCode = reGroups[16]
+  } else {
+    moldCode = ''
+    secCode = ''
+    efCode = ''
+    gcCode = ''
+    sOneCode = ''
+    sTwoCode = ''
+    sThreeCode = ''
+    taperCode = ''
+    baseDepthCode = ''
+    hardwareCode = ''
+    templateCode = ''
+    ibCode = ''
+    ivcCode = ''
+    nameplateCode = ''
+    caseCoverCode = ''
+    shippingCode = ''
   }
 
   const convertDate = (date) => {
@@ -72,7 +90,7 @@ function OrderItemInReview(props) {
   }
 
   return (
-    <StyledOrderItem>
+    <StyledOrderItem onClick={() => handleOrderNotesDisplay(order)}>
       <StyledActionsSegment>
         <StyledCheckbox
           type='checkbox'

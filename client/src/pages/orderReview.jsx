@@ -19,39 +19,46 @@ import {
 import Spinner from '../components/Spinner/Spinner';
 import Modal from '../components/Modal/Modal';
 import OrderItemInReview from '../components/OrderItem/OrderItemInReview';
+import {
+  MdOutlineEdit,
+  MdDelete,
+  MdAddComment
+} from 'react-icons/md'
 import styled from 'styled-components';
 
 function OrderReview(props) {
   const [sidebarData, setSidebarData] = useState({
-    orderNumber: '1000-0',
+    order: null,
+    orderNumber: '',
     billing: {
-      firstName: 'Paul',
-      lastName: 'Roque',
-      company: 'Calton Cases',
-      address: '6203 Waycross Dr.',
-      city: 'Austin',
-      postcode: '78745',
-      country: 'United States',
-      state: 'Texas',
-      email: 'paulroque13@gmail.com',
-      phone: '512-573-2335'
+      firstName: '',
+      lastName: '',
+      company: '',
+      address: '',
+      city: '',
+      postcode: '',
+      country: '',
+      state: '',
+      email: '',
+      phone: ''
     },
     shipping: {
-      firstName: 'Paul',
-      lastName: 'Roque',
-      company: 'Calton Cases',
-      address: '6203 Waycross Dr.',
-      city: 'Austin',
-      postcode: '78745',
-      country: 'United States',
-      state: 'Texas',
-      email: 'paulroque13@gmail.com',
-      phone: '512-573-2335'
+      firstName: '',
+      lastName: '',
+      company: '',
+      address: '',
+      city: '',
+      postcode: '',
+      country: '',
+      state: '',
+      email: '',
+      phone: ''
     },
     comments: []
   })
 
   const {
+    order,
     orderNumber,
     billing,
     shipping,
@@ -65,6 +72,8 @@ function OrderReview(props) {
     toggleCreateOrderModal,
     toggleDeleteOrderModal,
     toggleEditOrderModal,
+    toggleEditContactInfoModal,
+    toggleAddCommentModal,
     closeModal
   } = props
 
@@ -116,6 +125,38 @@ function OrderReview(props) {
     }
   }
 
+  const handleOrderNotesDisplay = (orderData) => {
+    setSidebarData({
+      order: orderData,
+      orderNumber: orderData.wcNumber,
+      billing: {
+        firstName: orderData.billing.firstName,
+        lastName: orderData.billing.lastName,
+        company: orderData.billing.company,
+        address: orderData.billing.address,
+        city: orderData.billing.city,
+        postcode: orderData.billing.postcode,
+        country: orderData.billing.country,
+        state: orderData.billing.state,
+        email: orderData.billing.email,
+        phone: orderData.billing.phone
+      },
+      shipping: {
+        firstName: orderData.shipping.firstName,
+        lastName: orderData.shipping.lastName,
+        company: orderData.shipping.company,
+        address: orderData.shipping.address,
+        city: orderData.shipping.city,
+        postcode: orderData.shipping.postcode,
+        country: orderData.shipping.country,
+        state: orderData.shipping.state,
+        email: orderData.shipping.email,
+        phone: orderData.shipping.phone
+      },
+      comments: orderData.comments
+    })
+  }
+
   const moveOrdersToNewStage = (status) => {
     const ordersToUpdate = {
       status: status,
@@ -124,6 +165,28 @@ function OrderReview(props) {
 
     dispatch(updateOrdersStatus(ordersToUpdate))
   }
+
+  // let barcode = '';
+  // let interval;
+
+  // const handleBarcode = (scannedCode) => {
+  //   console.log(scannedCode)
+  // }
+
+  // document.addEventListener('keydown', (e) => {
+  //   if(interval) {
+  //     clearInterval(interval)
+  //   }
+  //   if(e.code === 'Enter') {
+  //     if(barcode) {
+  //       handleBarcode(barcode)
+  //     }
+  //     barcode = ''
+  //     return
+  //   }
+  //   barcode += e.key.toString()
+  //   interval = setInterval(() => barcode = '', 20)
+  // });
 
   return (
     <StyledOrderReviewViewContainer>
@@ -193,6 +256,7 @@ function OrderReview(props) {
                     toggleEditModal={toggleEditOrderModal}
                     toggleDeleteModal={toggleDeleteOrderModal}
                     handleOrderSelect={handleOrderSelect}
+                    handleOrderNotesDisplay={handleOrderNotesDisplay}
                   />
                 ))}
               </StyledOrderTableBody>
@@ -212,45 +276,79 @@ function OrderReview(props) {
             <StyledSidebarTitle>Notes</StyledSidebarTitle>
           </StyledSidebarHeader>
           <StyledSidebarBody>
-            <p>{orderNumber}</p>
-            <h2>Billing:</h2>
-            <p>{billing.firstName}</p>
-            <p>{billing.lastName}</p>
-            <p>{billing.company}</p>
-            <p>{billing.address}</p>
-            <p>{billing.city}</p>
-            <p>{billing.postcode}</p>
-            <p>{billing.country}</p>
-            <p>{billing.state}</p>
-            <p>{billing.email}</p>
-            <p>{billing.phone}</p>
-            <h2>Shipping:</h2>
-            <p>{shipping.firstName}</p>
-            <p>{shipping.lastName}</p>
-            <p>{shipping.company}</p>
-            <p>{shipping.address}</p>
-            <p>{shipping.city}</p>
-            <p>{shipping.postcode}</p>
-            <p>{shipping.country}</p>
-            <p>{shipping.state}</p>
-            <p>{shipping.email}</p>
-            <p>{shipping.phone}</p>
-            <h2>Comments:</h2>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
-            <p>comment</p>
+            <StyledOrderNumberContainer>
+              <StyledOrderNumber>{orderNumber}</StyledOrderNumber>
+              {orderNumber ? (
+                <StyledEditIcon
+                  onClick={() => toggleEditContactInfoModal(order)}
+                />
+              ) : (
+                null
+              )}
+            </StyledOrderNumberContainer>
+            <StyledContactInfo>
+              <StyledBillingContainer>
+                <StyledBillingTitle>Billing:</StyledBillingTitle>
+                <p>{billing.firstName}</p>
+                <p>{billing.lastName}</p>
+                <p>{billing.company}</p>
+                <p>{billing.address}</p>
+                <p>{billing.city}</p>
+                <p>{billing.postcode}</p>
+                <p>{billing.country}</p>
+                <p>{billing.state}</p>
+                <StyledEmailTitle>Email:</StyledEmailTitle>
+                <p>{billing.email}</p>
+                <StyledPhoneTitle>Phone:</StyledPhoneTitle>
+                <p>{billing.phone}</p>
+              </StyledBillingContainer>
+              <StyledShippingContainer>
+                <StyledShippingTitle>Shipping:</StyledShippingTitle>
+                <p>{shipping.firstName}</p>
+                <p>{shipping.lastName}</p>
+                <p>{shipping.company}</p>
+                <p>{shipping.address}</p>
+                <p>{shipping.city}</p>
+                <p>{shipping.postcode}</p>
+                <p>{shipping.country}</p>
+                <p>{shipping.state}</p>
+                <StyledEmailTitle>Email:</StyledEmailTitle>
+                <p>{shipping.email}</p>
+                <StyledPhoneTitle>Phone:</StyledPhoneTitle>
+                <p>{shipping.phone}</p>
+              </StyledShippingContainer>
+            </StyledContactInfo>
+            <StyledCommentsContainer>
+              <StyledCommentHeaderContainer>
+                <h2>Comments:</h2>
+                {order ? (
+                <StyledAddCommentIcon 
+                  onClick={() => toggleAddCommentModal(order)}
+                />
+              ) : (
+                null
+              )}
+              </StyledCommentHeaderContainer>
+              {comments.length > 0 ? (
+              <div>
+                {comments.map((comment) => (
+                  <StyledCommentBody 
+                    key={comment.id}
+                  >
+                    {comment.body}
+                  </StyledCommentBody>
+                ))}
+              </div>
+            ) : (
+              <div>
+                {order ? (
+                  <h3>No comments to display</h3>
+                ) : (
+                  null
+                )}
+              </div>
+            )}
+            </StyledCommentsContainer>
           </StyledSidebarBody>
         </StyledSidebarContainer>
       </StyledOrdersContainer>
@@ -371,4 +469,82 @@ const StyledSidebarBody = styled.div`
   &::-webkit-scrollbar-corner {
     background-color: #009879;
   }
+`
+
+const StyledContactInfo = styled.div`
+  display: flex;
+  border-bottom: 3px solid #afafaf;
+  justify-content: space-evenly;
+`
+
+const StyledBillingContainer = styled.div`
+  padding: 10px;
+`
+
+const StyledShippingContainer = styled.div`
+  padding: 10px;
+`
+
+const StyledCommentsContainer = styled.div`
+  padding: 10px;
+`
+
+const StyledCommentHeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const StyledAddCommentIcon = styled(MdAddComment)`
+  display: block;  
+  font-size: 24px;
+  color: #009879;
+  padding: 10px;
+  cursor: pointer;
+`
+
+const StyledCommentBody = styled.p`
+  // padding: 10px;
+`
+
+const StyledOrderNumberContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const StyledOrderNumber = styled.h1`
+  padding: 10px;
+`
+
+const StyledEditIcon = styled(MdOutlineEdit)`
+  display: block;  
+  font-size: 32px;
+  color: #edb72f;
+  padding: 10px;
+  align-self: center;
+  cursor: pointer;
+`
+
+const StyledBillingTitle = styled.h2`
+  padding-bottom: 10px;
+  color: #009879;
+`
+
+const StyledShippingTitle = styled.h2`
+  padding-bottom: 10px;
+  color: #009879;
+`
+
+const StyledEmailTitle = styled.h3`
+  padding: 10px 0;
+  color: #009879;
+`
+
+// const StyledEmail = styled.p`
+//   overflow-wrap: anywhere;
+// `
+
+const StyledPhoneTitle = styled.h3`
+  padding: 10px 0;
+  color: #009879;
 `

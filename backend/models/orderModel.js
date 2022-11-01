@@ -155,7 +155,14 @@ const OrderSchema = new Schema({
   },
   comments: [
     {
-      body: String
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+      },
+      body: {
+        type: String,
+        required: true
+      }
     }
   ],
   fiberglass: {

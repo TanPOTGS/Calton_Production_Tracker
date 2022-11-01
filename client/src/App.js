@@ -48,6 +48,18 @@ function App() {
     orderDataForModal: orderDataForModal
   })
 
+  const toggleEditContactInfoModal = (orderDataForModal) => setModal({
+    displayModal: !displayModal,
+    modalType: 'editContactsForm',
+    orderDataForModal: orderDataForModal
+  })
+
+  const toggleAddCommentModal = (orderDataForModal) => setModal({
+    displayModal: !displayModal,
+    modalType: 'addCommentForm',
+    orderDataForModal: orderDataForModal
+  })
+
   const closeModal = () => setModal({
     displayModal: !displayModal,
     modalType: '',
@@ -78,6 +90,8 @@ function App() {
                   toggleCreateOrderModal={toggleCreateOrderModal}
                   toggleDeleteOrderModal={toggleDeleteOrderModal}
                   toggleEditOrderModal={toggleEditOrderModal}
+                  toggleEditContactInfoModal={toggleEditContactInfoModal}
+                  toggleAddCommentModal={toggleAddCommentModal}
                   closeModal={closeModal}
                 />}
               />
