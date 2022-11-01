@@ -91,6 +91,16 @@ function OrderItemInReview(props) {
     handleOrderSelect(isChecked, order._id)
   }
 
+  let reviewStatusColor;
+
+  if(order.reviewStatus === "Hold") {
+    reviewStatusColor = 'red'
+  } else if(order.reviewStatus === "Pending") {
+    reviewStatusColor = 'yellow'
+  } else if(order.reviewStatus === "Ready") {
+    reviewStatusColor = 'green'
+  }
+
   return (
     <StyledOrderItem onClick={() => handleOrderNotesDisplay(order)}>
       <StyledActionsSegment>
@@ -105,7 +115,7 @@ function OrderItemInReview(props) {
           <StyledDeleteIcon />
         </StyledActionButton>
       </StyledActionsSegment>
-      <StyledOrderSegment>{order.reviewStatus}</StyledOrderSegment>
+      <StyledReviewStatusSegment backgroundStatusColor={reviewStatusColor}>{order.reviewStatus}</StyledReviewStatusSegment>
       <StyledOrderSegment>{convertDate(order.submitDate)}</StyledOrderSegment>
       <StyledOrderSegment>{convertDate(order.reviewDate)}</StyledOrderSegment>
       <StyledOrderSegment>{convertDate(order.eligibleForProductionDate)}</StyledOrderSegment>
@@ -146,6 +156,7 @@ function OrderItemInReview(props) {
       <StyledBillingSegment>{convertDate(order.paymentDueDate)}</StyledBillingSegment>
       <StyledBillingSegment>{convertDate(order.paymentReceivedDate)}</StyledBillingSegment>
       <StyledLastSegment>{order.orderStatus}</StyledLastSegment>
+      {/* <StyledRowHighlight /> */}
     </StyledOrderItem>
   )
 }
@@ -153,6 +164,7 @@ function OrderItemInReview(props) {
 export default OrderItemInReview
 
 const StyledOrderItem = styled.tr`
+  position: relative;
   background-color: #ffffff;
   border-bottom: 1px solid #dddddd;
   font-weight: bold;
@@ -161,12 +173,30 @@ const StyledOrderItem = styled.tr`
   }
   &:hover > td {
     background-color: rgba(150, 153, 153, .3);
+    // background-color: rgba(104, 212, 177, .3);
   }
 `
+
+// const StyledRowHighlight = styled.td`
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   right: 0%;
+//   &:hover {
+//     // background-color: rgba(150, 153, 153, .3);
+//     background-color: rgba(104, 212, 177, .3);
+//   }
+// `
 
 const StyledOrderSegment = styled.td`
   padding: 12px 15px;
   border-right: 1px solid #afafaf;
+`
+
+const StyledReviewStatusSegment = styled.td`
+  padding: 12px 15px;
+  border-right: 1px solid #afafaf;
+  background-color: ${props => props.backgroundStatusColor};
 `
 
 const StyledModelCodeSegment = styled.td`

@@ -34,13 +34,27 @@ function Login() {
 
   const {user, isLoading, isError, isSuccess, message} = useSelector((state) => state.auth)
 
+  let goToDashboard = false;
+
+  if(user) {
+    if(user.userType === "Admin" || user.departmentRole === "Lead") {
+      goToDashboard = true
+    } else {
+      goToDashboard = false
+    }
+  }
+
   useEffect(() => {
     if(isError) {
       toast.error(message)
     }
 
     if(isSuccess || user) {
-      navigate('/dashboard/production')
+      if(goToDashboard) {
+        navigate('/dashboard/production')
+      } else {
+        navigate('/ready-scan')
+      }
     }
 
     dispatch(reset())

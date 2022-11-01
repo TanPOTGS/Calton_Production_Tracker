@@ -10,15 +10,33 @@ function Landing() {
 
   const {user} = useSelector((state) => state.auth)
   
+  let goToDashboard = false;
+
+  if(user) {
+    if(user.userType === "Admin" || user.departmentRole === "Lead") {
+      goToDashboard = true
+    } else {
+      goToDashboard = false
+    }
+  }
+  
   useEffect(() => {
     if(user) {
-      navigate('/dashboard/production')
+      if(goToDashboard) {
+        navigate('/dashboard/production')
+      } else {
+        navigate('/ready-scan')
+      }
     }
   }, [user, navigate])
 
   return (
     <StyledLandingContainer>
-      <p>Calton Cases Production Tracker</p>
+      {user ? (
+        null
+      ) : (
+        <p>Calton Cases Production Tracker</p>
+      )}
     </StyledLandingContainer>
   )
 }

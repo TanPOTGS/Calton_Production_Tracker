@@ -16,6 +16,7 @@ import OrdersClosed from './pages/ordersClosed';
 import Production from './pages/production';
 import ProductionCharts from './pages/productionCharts';
 import AdminCharts from './pages/adminCharts';
+import ReadyScan from './pages/readyScan';
 import Header from './components/Header/Header';
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
                   closeModal={closeModal}
                 />}
               />
+              <Route path='/ready-scan' element={<ReadyScan />} />
             </Routes>
           </MainViewContainer>
         </div>

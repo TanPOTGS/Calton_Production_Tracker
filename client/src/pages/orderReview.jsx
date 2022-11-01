@@ -166,28 +166,6 @@ function OrderReview(props) {
     dispatch(updateOrdersStatus(ordersToUpdate))
   }
 
-  // let barcode = '';
-  // let interval;
-
-  // const handleBarcode = (scannedCode) => {
-  //   console.log(scannedCode)
-  // }
-
-  // document.addEventListener('keydown', (e) => {
-  //   if(interval) {
-  //     clearInterval(interval)
-  //   }
-  //   if(e.code === 'Enter') {
-  //     if(barcode) {
-  //       handleBarcode(barcode)
-  //     }
-  //     barcode = ''
-  //     return
-  //   }
-  //   barcode += e.key.toString()
-  //   interval = setInterval(() => barcode = '', 20)
-  // });
-
   return (
     <StyledOrderReviewViewContainer>
       <StyledMenuContainer>

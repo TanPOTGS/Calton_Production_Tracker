@@ -27,17 +27,37 @@ function Dashboard() {
     navigate,
   ])
 
+  let displayAdminMenu = false;
+
+  if(user) {
+    if(user.userType === "Admin") {
+      displayAdminMenu = true
+    } else if(user.userType === "Production" && user.departmentRole === "Lead") {
+      displayAdminMenu = true
+    } else {
+      displayAdminMenu = false
+    }
+  }
+
+  let dashboardHeight = '95%'
+
+  displayAdminMenu ? dashboardHeight = '95%' : dashboardHeight = '100%'
+
   return (
     <StyledDashboardViewContainer>
-      <StyledMenuContainer>
-        <StyledNavLink to='production'>
-          Prduction Dashboard
-        </StyledNavLink>
-        <StyledNavLink to='admin'>
-          Admin Dashboard
-        </StyledNavLink>
-      </StyledMenuContainer>
-      <StyledDashboardContainer>
+      {displayAdminMenu ? (
+        <StyledMenuContainer>
+          <StyledNavLink to='production'>
+            Prduction Dashboard
+          </StyledNavLink>
+          <StyledNavLink to='admin'>
+            Admin Dashboard
+          </StyledNavLink>
+        </StyledMenuContainer>
+      ) : (
+        null
+      )}
+      <StyledDashboardContainer containerHeight={dashboardHeight}>
         <Outlet />
       </StyledDashboardContainer>
     </StyledDashboardViewContainer>
@@ -78,7 +98,7 @@ const StyledNavLink = styled(NavLink)`
 
 const StyledDashboardContainer = styled.div`
   overflow: scroll;
-  height: 95%;
+  height: ${props => props.containerHeight};
   width: 100%;
   &::-webkit-scrollbar {
     width: .5vw;

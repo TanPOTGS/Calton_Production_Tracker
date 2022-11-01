@@ -57,9 +57,9 @@ function ProductionCharts() {
           endingNumber={0}
           number={398}
         />
-        <StyledCountContainer>
+        {/* <StyledCountContainer>
           <DashboardDepartmentCount />
-        </StyledCountContainer>
+        </StyledCountContainer> */}
       </StyledGaugesContainer>
     </StyledChartsContainer>
   )
