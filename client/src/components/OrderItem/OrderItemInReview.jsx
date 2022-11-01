@@ -79,9 +79,11 @@ function OrderItemInReview(props) {
   }
 
   const convertDate = (date) => {
-    const convertedDate = new Date(date).toLocaleDateString('en-us', {timeZone: 'UTC'});
+    if(date) {
+      const convertedDate = new Date(date).toLocaleDateString('en-us', {timeZone: 'UTC'});
 
-    return convertedDate
+      return convertedDate
+    }
   }
 
   const toggleCheckbox = () => {
@@ -113,7 +115,7 @@ function OrderItemInReview(props) {
       <StyledOrderSegment>{order.caltonRep}</StyledOrderSegment>
       <StyledFiberglassOneSegment>{moldCode}</StyledFiberglassOneSegment>
       <StyledFiberglassOneSegment>{secCode}</StyledFiberglassOneSegment>
-      <StyledFiberglassOneSegment>N/A</StyledFiberglassOneSegment>
+      <StyledFiberglassOneSegment>{order.ralNumber}</StyledFiberglassOneSegment>
       <StyledSlashSegment>/</StyledSlashSegment>
       <StyledFiberglassTwoSegment>{efCode}</StyledFiberglassTwoSegment>
       <StyledFiberglassTwoSegment>{gcCode}</StyledFiberglassTwoSegment>
@@ -132,7 +134,18 @@ function OrderItemInReview(props) {
       <StyledSlashSegment>/</StyledSlashSegment>
       <StyledShippingSegment>{nameplateCode}</StyledShippingSegment>
       <StyledShippingSegment>{caseCoverCode}</StyledShippingSegment>
-      <StyledLastSegment>{shippingCode}</StyledLastSegment>
+      <StyledShippingSegment>{shippingCode}</StyledShippingSegment>
+      <StyledBillingSegment>{order.poNumber}</StyledBillingSegment>
+      <StyledBillingSegment>{order.pricing}</StyledBillingSegment>
+      <StyledBillingSegment>{order.serialNumber}</StyledBillingSegment>
+      <StyledBillingSegment>{convertDate(order.dateShipped)}</StyledBillingSegment>
+      <StyledBillingSegment>{order.trackingNumber}</StyledBillingSegment>
+      <StyledBillingSegment>{order.invoiceNumber}</StyledBillingSegment>
+      <StyledBillingSegment>{convertDate(order.invoiceDate)}</StyledBillingSegment>
+      <StyledBillingSegment>{order.invoiceSentVia}</StyledBillingSegment>
+      <StyledBillingSegment>{convertDate(order.paymentDueDate)}</StyledBillingSegment>
+      <StyledBillingSegment>{convertDate(order.paymentReceivedDate)}</StyledBillingSegment>
+      <StyledLastSegment>{order.orderStatus}</StyledLastSegment>
     </StyledOrderItem>
   )
 }
@@ -204,9 +217,15 @@ const StyledActionsSegment = styled.td`
   border-right: 1px solid #afafaf;
 `
 
+const StyledBillingSegment = styled.td`
+  padding: 12px 15px;
+  border-right: 1px solid #afafaf;
+  background-color: #feff85;
+`
+
 const StyledLastSegment = styled.td`
   padding: 12px 15px;
-  background-color: #ffe1af;
+  background-color: #feff85;
 `
 
 const StyledCheckbox = styled.input`

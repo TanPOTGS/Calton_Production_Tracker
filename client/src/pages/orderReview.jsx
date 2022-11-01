@@ -245,6 +245,17 @@ function OrderReview(props) {
                 <StyledOrderTableHeadRowSection>Nameplate Type</StyledOrderTableHeadRowSection>
                 <StyledOrderTableHeadRowSection>Accessories</StyledOrderTableHeadRowSection>
                 <StyledOrderTableHeadRowSection>Shipping Method</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>PO Number</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Pricing</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Serial Number</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Date Shipped</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Tracking Number</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>QB/PP Invoice</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>QB Invoice Date</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Invoice Sent Via</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Payment Due Date</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Payment Received Date</StyledOrderTableHeadRowSection>
+                <StyledOrderTableHeadRowSection>Order Status</StyledOrderTableHeadRowSection>
               </StyledOrderTableHeadRow>
             </StyledOrderTableHead>
             {orders.length > 0 ? (
@@ -454,7 +465,7 @@ const StyledSidebarTitle = styled.h1`
 `
 
 const StyledSidebarBody = styled.div`
-  overflow: scroll;
+  overflow: auto;
   height: 90%;
   &::-webkit-scrollbar {
     width: .5vw;
@@ -472,9 +483,7 @@ const StyledSidebarBody = styled.div`
 `
 
 const StyledContactInfo = styled.div`
-  display: flex;
   border-bottom: 3px solid #afafaf;
-  justify-content: space-evenly;
 `
 
 const StyledBillingContainer = styled.div`

@@ -11,7 +11,7 @@ const OrderSchema = new Schema({
   // },
   orderStatus: {
     type: String,
-    default: 'open'
+    default: 'Open'
   },
   orderCurrentState: {
     type: String,
@@ -37,6 +37,10 @@ const OrderSchema = new Schema({
   modelCode: {
     type: String,
     required: [true, 'Please add text to Model Code Field']
+  },
+  ralNumber: {
+    type: String,
+    default: 'N/A'
   },
   customer: {
     type: String
@@ -68,6 +72,34 @@ const OrderSchema = new Schema({
   pricing: {
     type: String,
     default: ''
+  },
+  serialNumber: {
+    type: String,
+    default: ''
+  },
+  dateShipped: {
+    type: Date
+  },
+  trackingNumber: {
+    type: String,
+    default: ''
+  },
+  invoiceNumber: {
+    type: String,
+    default: ''
+  },
+  invoiceDate: {
+    type: Date
+  },
+  invoiceSentVia: {
+    type: String,
+    default: ''
+  },
+  paymentDueDate: {
+    type: Date
+  },
+  paymentReceivedDate: {
+    type: Date
   },
   billing: {
     firstName: {
