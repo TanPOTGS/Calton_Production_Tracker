@@ -78,7 +78,8 @@ function OrdersHold() {
 
   return (
     <StyledOrdersHoldViewContainer>
-      <h1>Orders Hold</h1>
+      <h1>Height: {window.screen.height}</h1>
+      <h1>Width: {window.screen.width}</h1>
     </StyledOrdersHoldViewContainer>
   )
 }
