@@ -38,6 +38,19 @@ export const getOrders = createAsyncThunk('orders/getAll', async (_, thunkAPI) =
   }
 })
 
+//Get order
+export const getOrder = createAsyncThunk('orders/getOne', async (wcNumber, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token
+
+    return await orderService.getOrder(wcNumber, token)
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 //Update order
 export const updateOrder = createAsyncThunk('orders/update', async (newOrderData, thunkAPI) => {
   try {
@@ -110,6 +123,19 @@ export const orderSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.message = action.payload
+      })
+      .addCase(getOrder.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getOrder.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.orders = action.payload
+      })
+      .addCase(getOrder.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = [action.payload]
       })
       .addCase(updateOrder.pending, (state) => {
         state.isLoading = true

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { 
   getOrders,
+  getOrder,
   createOrder,
   updateOrder,
   updateOrdersStatus,
@@ -10,6 +11,8 @@ const {
 const { protect } = require('../middleware/authMiddleware')
 
 router.get('/',protect, getOrders);
+
+router.get('/:wcNumber',protect, getOrder);
 
 router.post('/',protect, createOrder);
 

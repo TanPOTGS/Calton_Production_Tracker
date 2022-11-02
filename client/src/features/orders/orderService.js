@@ -28,6 +28,19 @@ const getOrders = async (token) => {
   return response.data
 }
 
+//Get order
+const getOrder = async (wcNumber, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const response = await axios.get(API_URL + wcNumber, config)
+  
+  return response.data
+}
+
 //Update order
 const updateOrder = async (orderData, token) => {
   const config = {
@@ -70,6 +83,7 @@ const deleteOrder = async (orderId, token) => {
 const orderService = {
   createNewOrder,
   getOrders,
+  getOrder,
   updateOrder,
   updateOrdersStatus,
   deleteOrder

@@ -14,6 +14,16 @@ const getOrders = asyncHandler(async (req, res) => {
   res.status(200).json(orders);
 })
 
+// @desc  Get Specific Order
+// @route   GET api/orders/:wcNumber
+// @access  Private
+const getOrder = asyncHandler(async (req, res) => {
+  const order = await Order.find({wcNumber: req.params.wcNumber});
+
+  res.status(200).json(order);
+  // console.log(req.body)
+})
+
 // @desc  Create An Order
 // @route   POST api/orders
 // @access  Private
@@ -149,6 +159,7 @@ const deleteOrder = asyncHandler(async (req, res) => {
 
 module.exports = {
   getOrders,
+  getOrder,
   createOrder,
   updateOrder,
   updateOrdersStatus,
