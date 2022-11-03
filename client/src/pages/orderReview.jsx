@@ -54,6 +54,7 @@ function OrderReview(props) {
       email: '',
       phone: ''
     },
+    orderNote: '',
     comments: []
   })
 
@@ -62,6 +63,7 @@ function OrderReview(props) {
     orderNumber,
     billing,
     shipping,
+    orderNote,
     comments
   } = sidebarData
 
@@ -74,6 +76,7 @@ function OrderReview(props) {
     toggleEditOrderModal,
     toggleEditContactInfoModal,
     toggleAddCommentModal,
+    toggleAddOrderNoteModal,
     closeModal
   } = props
 
@@ -153,6 +156,7 @@ function OrderReview(props) {
         email: orderData.shipping.email,
         phone: orderData.shipping.phone
       },
+      orderNote: orderData.orderNote,
       comments: orderData.comments
     })
   }
@@ -307,6 +311,21 @@ function OrderReview(props) {
                 <p>{shipping.phone}</p>
               </StyledShippingContainer>
             </StyledContactInfo>
+            <StyledOrderNotesContainer>
+              <StyledOrderNotesHeader>
+                <h2>Important Notes About Build:</h2>
+                {order ? (
+                  <StyledAddCommentIcon 
+                    onClick={() => toggleAddOrderNoteModal(order)}
+                  />
+                ) : (
+                  null
+                )}
+              </StyledOrderNotesHeader>
+              <StyledOrderNoteBody>
+                <p>{orderNote}</p>
+              </StyledOrderNoteBody>
+            </StyledOrderNotesContainer>
             <StyledCommentsContainer>
               <StyledCommentHeaderContainer>
                 <h2>Comments:</h2>
@@ -470,6 +489,22 @@ const StyledBillingContainer = styled.div`
 
 const StyledShippingContainer = styled.div`
   padding: 10px;
+`
+
+const StyledOrderNotesContainer = styled.div`
+  padding: 10px;
+  border-bottom: 3px solid #afafaf;
+`
+
+const StyledOrderNotesHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const StyledOrderNoteBody = styled.div`
+  padding: 10px;
+  white-space: pre-wrap;
 `
 
 const StyledCommentsContainer = styled.div`

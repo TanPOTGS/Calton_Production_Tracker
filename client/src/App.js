@@ -61,6 +61,12 @@ function App() {
     orderDataForModal: orderDataForModal
   })
 
+  const toggleAddOrderNoteModal = (orderDataForModal) => setModal({
+    displayModal: !displayModal,
+    modalType: 'addOrderNoteForm',
+    orderDataForModal: orderDataForModal
+  })
+
   const closeModal = () => setModal({
     displayModal: !displayModal,
     modalType: '',
@@ -78,7 +84,7 @@ function App() {
               <Route path='/register' element={<Register />} />
               <Route path='/login' element={<Login />} />
               <Route path='/dashboard' element={<Dashboard />}>
-                <Route index element={<ProductionCharts />} />
+                {/* <Route index element={<ProductionCharts />} /> */}
                 <Route path='production' element={<ProductionCharts />} />
                 <Route path='admin' element={<AdminCharts />} />
               </Route>
@@ -93,6 +99,7 @@ function App() {
                   toggleEditOrderModal={toggleEditOrderModal}
                   toggleEditContactInfoModal={toggleEditContactInfoModal}
                   toggleAddCommentModal={toggleAddCommentModal}
+                  toggleAddOrderNoteModal={toggleAddOrderNoteModal}
                   closeModal={closeModal}
                 />}
               />

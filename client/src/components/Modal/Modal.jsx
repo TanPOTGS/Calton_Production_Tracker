@@ -3,6 +3,7 @@ import DeleteMessage from '../DeleteMessage/DeleteMessage';
 import UpdateOrderForm from '../UpdateOrderForm/UpdateOrderForm';
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
 import UpdateContactsForm from '../UpdateContactsForm/UpdateContactsForm';
+import CreateOrderNoteForm from '../CreateOrderNoteForm/CreateOrderNoteForm';
 import styled from 'styled-components';
 
 function Modal(modalProps) {
@@ -35,6 +36,11 @@ function Modal(modalProps) {
         />
       case 'addCommentForm':
         return <AddCommentForm
+          closeModal={closeModal}
+          orderDataForModal={orderDataForModal}
+        />
+        case 'addOrderNoteForm':
+        return <CreateOrderNoteForm 
           closeModal={closeModal}
           orderDataForModal={orderDataForModal}
         />

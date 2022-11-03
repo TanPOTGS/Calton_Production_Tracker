@@ -185,6 +185,10 @@ const OrderSchema = new Schema({
       default: ''
     },
   },
+  orderNote: {
+    type: String,
+    default: ''
+  },
   comments: [
     {
       id: {
