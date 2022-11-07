@@ -1,5 +1,4 @@
 import {
-  useState,
   useEffect,
   useRef
 } from 'react'
@@ -18,26 +17,8 @@ import DepartmentTasks from '../components/DepartmentTasks/DepartmentTasks';
 import Spinner from '../components/Spinner/Spinner';
 import styled from 'styled-components';
 
+
 function ReadyScan() {
-  const [timerData, setTimerData] = useState({
-    ms: 0,
-    s: 0,
-    m: 0,
-    h: 0
-  })
-  const [timerInterval, setTimerInterval] = useState();
-  const [timerStatus, setTimerStatus] = useState(0);
-  // Not started = 0
-  // started = 1
-  // stopped = 2
-
-  const {
-    ms,
-    s,
-    m,
-    h
-  } = timerData
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -86,45 +67,6 @@ function ReadyScan() {
     barcodeInterval = setInterval(() => barcode = '', 20)
   }
 
-  let updatedMs = ms;
-  let updatedS = s;
-  let updatedM = m;
-  let updatedH = h;
-
-  const handleCount = () => {
-    if(updatedM === 60){
-      updatedH++;
-      updatedM = 0;
-    }
-    if(updatedS === 60){
-      updatedM++;
-      updatedS = 0;
-    }
-    if(updatedMs === 100){
-      updatedS++;
-      updatedMs = 0;
-    }
-    updatedMs++;
-    return setTimerData({ms:updatedMs, s:updatedS, m:updatedM, h:updatedH});
-  }
-
-  const startTimer = () => {
-    handleCount();
-    setTimerStatus(1);
-    setTimerInterval(setInterval(handleCount, 10));
-  }
-
-  const stopTimer = () => {
-    clearInterval(timerInterval);
-    setTimerStatus(2);
-  }
-
-  const resetTimer = () => {
-    clearInterval(timerInterval);
-    setTimerStatus(0);
-    setTimerData({ms:0, s:0, m:0, h:0})
-  }
-
   if (isLoading) {
     return <Spinner />
   }
@@ -133,30 +75,38 @@ function ReadyScan() {
   return (
     <StyledScanViewContainer ref={ref} tabIndex={-1} onKeyDown={handleBarcode}>
       {orders.length > 0 ? (
-        <StyledOrderDataDisplay >
-          <StyledWcNumberDisplay>{orders[0].wcNumber}</StyledWcNumberDisplay>
-          <StyledModelCodeDisplay>{orders[0].modelCode}</StyledModelCodeDisplay>
-          <StyledRalNumberDisplay>RAL: {orders[0].ralNumber}</StyledRalNumberDisplay>
-          <StyledOrderNoteDisplay>Notes About Build: {orders[0].orderNote}</StyledOrderNoteDisplay>
-          <h2>Pick a task to start:</h2>
-          {user && <DepartmentTasks 
-            department={user.department}
-          />}
-          <div>
-            <p>
-              <span>{h}</span>
-              :
-              <span>{m}</span>
-              :
-              <span>{s}</span>
-              :
-              <span>{ms}</span>
-            </p>
-            <button onClick={startTimer}>Start</button>
-            <button onClick={stopTimer}>Stop</button>
-            <button onClick={resetTimer}>Reset</button>
-          </div>
-        </StyledOrderDataDisplay>
+        <StyledGrid >
+          <StyledOrderDataContainer>
+            <StyledWcNumberDisplay>
+              <StyledWcNumberTitle>WC Number:</StyledWcNumberTitle>
+              <StyledWcNumberBody>{orders[0].wcNumber}</StyledWcNumberBody>
+            </StyledWcNumberDisplay>
+            <StyledModelCodeDisplay>
+              <StyledModelCodeTitle>Model Code:</StyledModelCodeTitle>
+              <StyledModelCodeBody>{orders[0].modelCode}</StyledModelCodeBody>
+            </StyledModelCodeDisplay>
+            <StyledRalNumberDisplay>
+              <StyledRalNumberTitle>RAL:</StyledRalNumberTitle>
+              <StyledRalNumberBody>{orders[0].ralNumber}</StyledRalNumberBody>
+            </StyledRalNumberDisplay>
+          </StyledOrderDataContainer>
+          <StyledOrderNotesContainer>
+            <StyledOrderNotesHeader>
+              <StyledOrderNotesTitle>Notes About Build:</StyledOrderNotesTitle>
+            </StyledOrderNotesHeader>
+            <StyledOrderNotesDisplay>
+              <StyledOrderNotesBody>
+                {orders[0].orderNote}
+              </StyledOrderNotesBody>
+            </StyledOrderNotesDisplay>
+          </StyledOrderNotesContainer>
+          <StyledTasksView>
+            {user && <DepartmentTasks 
+              department={user.department}
+              orderData={orders[0]}
+            />}
+          </StyledTasksView>
+        </StyledGrid>
       ) : (
         <StyledPrompt>*Please Scan A Case*</StyledPrompt>
       )}
@@ -171,8 +121,95 @@ const StyledScanViewContainer = styled.div`
   width: 100%;
 `
 
-const StyledOrderDataDisplay = styled.div`
+const StyledGrid = styled.div`
+  display: grid;
+  gap: .5rem;
+  height: 100%;
+  background-color: #000000;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+`
 
+const StyledOrderDataContainer = styled.div`
+  background-color: #4a4a4a;
+  grid-column: span 4;
+`
+
+const StyledWcNumberDisplay = styled.div`
+  padding: 10px;
+`
+
+const StyledWcNumberTitle = styled.h2`
+  color: #009879;
+`
+
+const StyledWcNumberBody = styled.h1`
+  color: #ffffff;
+`
+
+const StyledModelCodeDisplay = styled.div`
+  padding: 10px;
+`
+
+const StyledModelCodeTitle = styled.h2`
+  color: #009879;
+`
+
+const StyledModelCodeBody = styled.h1`
+  color: #ffffff;
+`
+
+const StyledRalNumberDisplay = styled.div`
+  padding: 10px;
+`
+
+const StyledRalNumberTitle = styled.h2`
+  color: #009879;
+`
+
+const StyledRalNumberBody = styled.h1`
+  color: #fff
+`
+
+const StyledOrderNotesContainer = styled.div`
+  background-color: #4a4a4a;
+  grid-column: span 2;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: .5vw;
+    height: 1vh;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #88f7ba;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #009879;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: #009879;
+  }
+`
+
+const StyledOrderNotesHeader = styled.div`
+  padding: 10px;
+`
+
+const StyledOrderNotesTitle = styled.h1`
+  color: #009879;
+`
+
+const StyledOrderNotesDisplay = styled.div`
+  padding: 10px;
+`
+
+const StyledOrderNotesBody = styled.p`
+  color: #ffffff;
+  white-space: pre-wrap;
+`
+
+const StyledTasksView = styled.div`
+  background-color: #4a4a4a;
+  grid-column: span 6;
 `
 
 const StyledPrompt = styled.p`
@@ -186,21 +223,4 @@ const StyledPrompt = styled.p`
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 70px;
-`
-
-const StyledWcNumberDisplay = styled.h1`
-  color: #ffffff;
-`
-
-const StyledModelCodeDisplay = styled.h1`
-  color: #ffffff;
-`
-
-const StyledRalNumberDisplay = styled.h1`
-  color: #ffffff;
-`
-
-const StyledOrderNoteDisplay = styled.p`
-  color: #ffffff;
-  white-space: pre-wrap;
 `

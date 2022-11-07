@@ -7,21 +7,22 @@ import styled from 'styled-components';
 
 function DepartmentTasks(props) {
   const {
-    department
+    department,
+    orderData
   } = props
 
   const renderTasks = () => {
     switch (department) {
       case 'Fiberglass':
-        return <FiberglassTasks />
+        return <FiberglassTasks orderData={orderData} />
       case 'Hardware':
-        return <HardwareTasks />
+        return <HardwareTasks orderData={orderData} />
       case 'Trim':
-        return <TrimTasks />
+        return <TrimTasks orderData={orderData} />
       case 'Interiors':
-        return <InteriorsTasks />
+        return <InteriorsTasks orderData={orderData} />
       case 'Shipping':
-        return <ShippingTasks />
+        return <ShippingTasks orderData={orderData} />
       default:
         console.log('default');
     }
@@ -37,5 +38,5 @@ function DepartmentTasks(props) {
 export default DepartmentTasks
 
 const StyledTasksContainer = styled.div`
-  
+  height: 100%;
 `
