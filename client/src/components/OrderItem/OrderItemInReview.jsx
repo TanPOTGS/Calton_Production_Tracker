@@ -156,7 +156,6 @@ function OrderItemInReview(props) {
       <StyledBillingSegment>{convertDate(order.paymentDueDate)}</StyledBillingSegment>
       <StyledBillingSegment>{convertDate(order.paymentReceivedDate)}</StyledBillingSegment>
       <StyledLastSegment>{order.orderStatus}</StyledLastSegment>
-      {/* <StyledRowHighlight /> */}
     </StyledOrderItem>
   )
 }
@@ -166,27 +165,18 @@ export default OrderItemInReview
 const StyledOrderItem = styled.tr`
   position: relative;
   background-color: #ffffff;
-  border-bottom: 1px solid #dddddd;
+  border-top: 2px solid #dddddd;
+  border-bottom: 2px solid #dddddd;
   font-weight: bold;
   &:nth-of-type(even) {
     background-color: #f3f3f3;
   }
   &:hover > td {
-    background-color: rgba(150, 153, 153, .3);
-    // background-color: rgba(104, 212, 177, .3);
+    border-right: 1px solid #000000;
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
   }
 `
-
-// const StyledRowHighlight = styled.td`
-//   position: absolute;
-//   width: 100%;
-//   height: 100%;
-//   right: 0%;
-//   &:hover {
-//     // background-color: rgba(150, 153, 153, .3);
-//     background-color: rgba(104, 212, 177, .3);
-//   }
-// `
 
 const StyledOrderSegment = styled.td`
   padding: 12px 15px;

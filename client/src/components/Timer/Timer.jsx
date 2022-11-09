@@ -17,7 +17,7 @@ import {
 import Spinner from '../Spinner/Spinner'
 import styled from 'styled-components';
 
-function Timer() {
+function Timer(props) {
   const [timerData, setTimerData] = useState({
     ms: 0,
     s: 0,
@@ -36,6 +36,10 @@ function Timer() {
     m,
     h
   } = timerData
+
+  const {
+    handleTaskSelection
+  } = props
 
   // const dispatch = useDispatch()
   // const navigate = useNavigate()
@@ -110,14 +114,17 @@ function Timer() {
     <StyledTimerContainer>
       <StyledButtonContainer>
         {timerStatus === 0 ? (
-          <StyledStartButton onClick={startTimer}>Start</StyledStartButton>
+          <>
+            <StyledBackButton onClick={() => handleTaskSelection(false)}>Back To Tasks</StyledBackButton>
+            <StyledStartButton onClick={startTimer}>Start</StyledStartButton>
+          </>
         ) : (
           null
         )}
         {timerStatus === 1 ? (
           <>
             <StyledPauseButton onClick={pauseTimer}>Pause</StyledPauseButton>
-            <StyledFinishedButton onClick={resetTimer} disabled>Finish</StyledFinishedButton>
+            <StyledFinishedButton disabled>Finish</StyledFinishedButton>
           </>
         ) : (
           null
@@ -165,28 +172,45 @@ const StyledCounterContainer = styled.div`
   align-items: center;
 `
 
+const StyledBackButton = styled.button`
+  width: 200px;
+  height: 100px;
+  font-size: 2rem;
+  margin: 0 10px 0 0;
+  // background-color: #009879;
+  // color: #ffffff;
+`
+
 const StyledStartButton = styled.button`
   width: 200px;
   height: 100px;
   font-size: 2rem;
+  margin: 0 0 0 10px;
+  background-color: #009879;
+  color: #ffffff;
 `
 
 const StyledPauseButton = styled.button`
   width: 200px;
   height: 100px;
   font-size: 2rem;
+  margin: 0 10px 0 0;
+  background-color: #f0372e;
 `
 
 const StyledResumeButton = styled.button`
   width: 200px;
   height: 100px;
   font-size: 2rem;
+  margin: 0 10px 0 0;
+  background-color: #51e810;
 `
 
 const StyledFinishedButton = styled.button`
   width: 200px;
   height: 100px;
   font-size: 2rem;
+  margin: 0 0 0 10px;
 `
 
 const StyledCounter = styled.p`

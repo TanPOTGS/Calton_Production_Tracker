@@ -67,6 +67,19 @@ const updateOrdersStatus = async (orderData, token) => {
   return response.data
 }
 
+//Add comment to order
+const addComment = async (orderData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const response = await axios.post(API_URL + orderData._id + '/newComment', orderData.newComment, config)
+
+  return response.data
+}
+
 //Delete order
 const deleteOrder = async (orderId, token) => {
   const config = {
@@ -86,6 +99,7 @@ const orderService = {
   getOrder,
   updateOrder,
   updateOrdersStatus,
+  addComment,
   deleteOrder
 }
 

@@ -89,6 +89,7 @@ function OrderReview(props) {
 
   const {
     orders,
+    isSuccess,
     isLoading,
     isError,
     message
@@ -112,6 +113,39 @@ function OrderReview(props) {
     navigate,
     dispatch
   ])
+
+  const clearSidebarState = () => {
+    setSidebarData({
+      order: null,
+      orderNumber: '',
+      billing: {
+        firstName: '',
+        lastName: '',
+        company: '',
+        address: '',
+        city: '',
+        postcode: '',
+        country: '',
+        state: '',
+        email: '',
+        phone: ''
+      },
+      shipping: {
+        firstName: '',
+        lastName: '',
+        company: '',
+        address: '',
+        city: '',
+        postcode: '',
+        country: '',
+        state: '',
+        email: '',
+        phone: ''
+      },
+      orderNote: '',
+      comments: []
+    })
+  }
 
   if (isLoading) {
     return <Spinner />
@@ -190,6 +224,8 @@ function OrderReview(props) {
         closeModal={closeModal}
         modalType={modalType}
         orderDataForModal={orderDataForModal}
+        handleOrderNotesDisplay={handleOrderNotesDisplay}
+        clearSidebarState={clearSidebarState}
       />}
       <StyledOrdersContainer>
         <StyledTableContainer>
@@ -341,7 +377,7 @@ function OrderReview(props) {
               <div>
                 {comments.map((comment) => (
                   <StyledCommentBody 
-                    key={comment.id}
+                    key={comment.commentId}
                   >
                     {comment.body}
                   </StyledCommentBody>

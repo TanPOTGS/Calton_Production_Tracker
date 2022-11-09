@@ -18,7 +18,8 @@ import styled from 'styled-components';
 function UpdateOrderForm(props) {
   const {
     closeModal,
-    orderDataForModal
+    orderDataForModal,
+    clearSidebarState
   } = props
 
   const [formPageData, setFormPageData] = useState({
@@ -142,6 +143,7 @@ function UpdateOrderForm(props) {
 
     if(isSuccess) {
       closeModal()
+      clearSidebarState()
     }
   }
   

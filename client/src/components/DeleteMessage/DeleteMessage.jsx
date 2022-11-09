@@ -14,6 +14,7 @@ function DeleteMessage(props) {
   const {
     orderDataForModal,
     closeModal,
+    clearSidebarState
   } = props
 
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function DeleteMessage(props) {
 
     if(isSuccess) {
       closeModal()
+      clearSidebarState()
     }
   }
 

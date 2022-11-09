@@ -18,7 +18,8 @@ import styled from 'styled-components';
 function UpdateContactsForm(props) {
   const {
     closeModal,
-    orderDataForModal
+    orderDataForModal,
+    handleOrderNotesDisplay
   } = props
 
   const [formPageData, setFormPageData] = useState({
@@ -125,10 +126,42 @@ function UpdateContactsForm(props) {
       }
     }
 
+    const newContactInfoForState = {
+      _id,
+      wcNumber: orderDataForModal.wcNumber,
+      billing: {
+        firstName: billingFirstName,
+        lastName: billingLastName,
+        company: billingCompany,
+        address: billingAddress,
+        city: billingCity,
+        postcode: billingPostcode,
+        country: billingCountry,
+        state: billingState,
+        email: billingEmail,
+        phone: billingPhone
+      },
+      shipping: {
+        firstName: shippingFirstName,
+        lastName: shippingLastName,
+        company: shippingCompany,
+        address: shippingAddress,
+        city: shippingCity,
+        postcode: shippingPostcode,
+        country: shippingCountry,
+        state: shippingState,
+        email: shippingEmail,
+        phone: shippingPhone
+      },
+      orderNote: orderDataForModal.orderNote,
+      comments: orderDataForModal.comments
+    }
+
     dispatch(updateOrder(newOrderData))
 
     if(isSuccess) {
       closeModal()
+      handleOrderNotesDisplay(newContactInfoForState)
     }
   }
   

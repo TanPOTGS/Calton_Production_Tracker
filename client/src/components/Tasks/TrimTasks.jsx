@@ -6,32 +6,35 @@ import styled from 'styled-components';
 
 function TrimTasks(props) {
   const [timerVisibility, setTimerVisibility] = useState(false);
+  const [selectedTask, setSelectedTask] = useState('');
 
   const {
     orderData
   } = props
 
-  const handleTaskSelection = () => {
-    setTimerVisibility(true)
+  const handleTaskSelection = (visibility, task) => {
+    setTimerVisibility(visibility)
+    setSelectedTask(task)
   }
 
   return (
     <StyledTrimTasksContainer>
       {timerVisibility ? (
-          <>
-            <Timer />
-            {/* <button onClick={() => setTimerVisibility(false)}>close</button> */}
-          </>
+          <Timer
+            handleTaskSelection={handleTaskSelection}
+            selectedTask={selectedTask}
+            orderData={orderData}
+          />
         ) : (
         <StyledButtonGrid>
-          <button onClick={handleTaskSelection}>Inspection After Hardware</button>
-          <button onClick={handleTaskSelection}>Cut Top Trim</button>
-          <button onClick={handleTaskSelection}>Cut Bottom Trim</button>
-          <button onClick={handleTaskSelection}>Dry Fit Before Interiors</button>
-          <button onClick={handleTaskSelection}>Inspection After Interiors</button>
-          <button onClick={handleTaskSelection}>Fabric Trim And Sanding Process</button>
-          <button onClick={handleTaskSelection}>Gluing Process</button>
-          <button onClick={handleTaskSelection}>Final Cleaning</button>
+          <StyledTaskButton onClick={() => handleTaskSelection(true, "task1")}>Inspection After Hardware</StyledTaskButton>
+          <StyledTaskButton onClick={() => handleTaskSelection(true, "task2")}>Cut Top Trim</StyledTaskButton>
+          <StyledTaskButton onClick={() => handleTaskSelection(true, "task3")}>Cut Bottom Trim</StyledTaskButton>
+          <StyledTaskButton onClick={() => handleTaskSelection(true, "task4")}>Dry Fit Before Interiors</StyledTaskButton>
+          <StyledTaskButton onClick={() => handleTaskSelection(true, "task5")}>Inspection After Interiors</StyledTaskButton>
+          <StyledTaskButton onClick={() => handleTaskSelection(true, "task6")}>Fabric Trim And Sanding Process</StyledTaskButton>
+          <StyledTaskButton onClick={() => handleTaskSelection(true, "task7")}>Gluing Process</StyledTaskButton>
+          <StyledTaskButton onClick={() => handleTaskSelection(true, "task8")}>Final Cleaning</StyledTaskButton>
         </StyledButtonGrid>
       )}
     </StyledTrimTasksContainer>
@@ -49,4 +52,10 @@ const StyledButtonGrid = styled.div`
   height: 100%;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
+`
+
+const StyledTaskButton = styled.button`
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 5px;
 `

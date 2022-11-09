@@ -189,18 +189,7 @@ const OrderSchema = new Schema({
     type: String,
     default: ''
   },
-  comments: [
-    {
-      id: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
-      },
-      body: {
-        type: String,
-        required: true
-      }
-    }
-  ],
+  comments: [],
   fiberglass: {
     siDate: {
       type: Date,

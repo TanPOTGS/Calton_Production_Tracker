@@ -129,6 +129,27 @@ const updateOrdersStatus = asyncHandler(async (req, res) => {
   res.status(200).json(updatedOrders);
 })
 
+// @desc  Add comment to order
+// @route   POST api/orders/:id/newComment
+// @access  Private
+const addComment = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if(!order) {
+    res.status(400)
+    throw new Error('Order not found')
+  }
+
+  const updatedOrder = await Order.findByIdAndUpdate(req.params.id, {
+    $push: {comments: req.body}
+  }, {
+    safe: true,
+    upsert: true
+  });
+
+  res.status(200).json(updatedOrder);
+})
+
 // @desc  Delete An Order
 // @route   DELETE api/orders/:id
 // @access  Public
@@ -163,5 +184,6 @@ module.exports = {
   createOrder,
   updateOrder,
   updateOrdersStatus,
+  addComment,
   deleteOrder
 }

@@ -77,6 +77,19 @@ export const updateOrdersStatus = createAsyncThunk('orders/updateStatus', async 
   }
 })
 
+//Add comment to order
+export const addComment = createAsyncThunk('orders/addComment', async (commentData, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token
+
+    return await orderService.addComment(commentData, token)
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 //Delete order
 export const deleteOrder = createAsyncThunk('orders/delete', async (id, thunkAPI) => {
   try {
@@ -164,6 +177,24 @@ export const orderSlice = createSlice({
         state.orders = state.orders.filter(({_id}) => !action.meta.arg.ids.includes(_id))
       })
       .addCase(updateOrdersStatus.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(addComment.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addComment.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.orders = state.orders.map((order) => {
+          if(order._id === action.payload._id) {
+            order.comments.push(action.meta.arg.newComment)
+          }
+          return order
+        })
+      })
+      .addCase(addComment.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

@@ -85,11 +85,13 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc  Get User Data
-// @route   GET api/users/me
+// @desc  Get Users
+// @route   GET api/users
 // @access  Private
-const getMe = asyncHandler(async (req, res) => {
-  res.status(200).json(req.user)
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find();
+  
+  res.status(200).json(users)
 })
 
 // Generate JWT
@@ -102,5 +104,5 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
-  getMe
+  getUsers
 }

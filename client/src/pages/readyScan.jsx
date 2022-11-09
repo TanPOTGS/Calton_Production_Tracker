@@ -43,7 +43,8 @@ function ReadyScan() {
   }, [
     user,
     orders,
-    navigate
+    navigate,
+    dispatch
   ]);
   
   let barcode = '';

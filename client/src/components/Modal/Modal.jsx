@@ -10,7 +10,9 @@ function Modal(modalProps) {
   const {
     closeModal,
     modalType,
-    orderDataForModal
+    orderDataForModal,
+    handleOrderNotesDisplay,
+    clearSidebarState
   } = modalProps
 
   const renderModal = () => {
@@ -23,16 +25,19 @@ function Modal(modalProps) {
         return <DeleteMessage
             closeModal={closeModal}
             orderDataForModal={orderDataForModal}
+            clearSidebarState={clearSidebarState}
           />
       case 'editOrderForm':
         return <UpdateOrderForm
             closeModal={closeModal}
             orderDataForModal={orderDataForModal}
+            clearSidebarState={clearSidebarState}
           />
       case 'editContactsForm':
         return <UpdateContactsForm
           closeModal={closeModal}
           orderDataForModal={orderDataForModal}
+          handleOrderNotesDisplay={handleOrderNotesDisplay}
         />
       case 'addCommentForm':
         return <AddCommentForm
