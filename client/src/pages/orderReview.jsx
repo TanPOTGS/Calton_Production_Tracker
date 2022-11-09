@@ -14,7 +14,7 @@ import {
 import {
   getOrders,
   updateOrdersStatus,
-  reset
+  resetOrders
 } from '../features/orders/orderSlice';
 import Spinner from '../components/Spinner/Spinner';
 import Modal from '../components/Modal/Modal';
@@ -102,7 +102,7 @@ function OrderReview(props) {
     
     if (isError && user) {
       console.log(message);
-      dispatch(reset())
+      dispatch(resetOrders())
     }
 
     dispatch(getOrders())
@@ -359,7 +359,13 @@ function OrderReview(props) {
                 )}
               </StyledOrderNotesHeader>
               <StyledOrderNoteBody>
-                <p>{orderNote}</p>
+                {orderNote ? (
+                  <StyledOrderNote>
+                    {orderNote}
+                  </StyledOrderNote>
+                ) : (
+                  null
+                )}
               </StyledOrderNoteBody>
             </StyledOrderNotesContainer>
             <StyledCommentsContainer>
@@ -379,7 +385,20 @@ function OrderReview(props) {
                   <StyledCommentBody 
                     key={comment.commentId}
                   >
-                    {comment.body}
+                    {comment.recipients.length >= 1 ? (
+                      <>
+                        <p>People Tagged:</p>
+                        <ul>
+                          {comment.commentRecipients.map((recipient) => (
+                            <li>{recipient}</li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : (
+                      null
+                    )}
+                    <StyledComment>{comment.body}</StyledComment>
+                    <StyledCommentAuthor>Posted by: {comment.author}</StyledCommentAuthor>
                   </StyledCommentBody>
                 ))}
               </div>
@@ -543,6 +562,10 @@ const StyledOrderNoteBody = styled.div`
   white-space: pre-wrap;
 `
 
+const StyledOrderNote = styled.p`
+  font-weight: 700;
+`
+
 const StyledCommentsContainer = styled.div`
   padding: 10px;
 `
@@ -561,8 +584,20 @@ const StyledAddCommentIcon = styled(MdAddComment)`
   cursor: pointer;
 `
 
-const StyledCommentBody = styled.p`
-  // padding: 10px;
+const StyledComment = styled.p`
+  // padding: 20px 5px;
+`
+
+const StyledCommentAuthor = styled.p`
+  padding-top: 10px;
+  font-size: .7rem;
+  font-weight: 700;
+`
+
+const StyledCommentBody = styled.div`
+  // display: flex;
+  padding: 20px 5px;
+  border-bottom: 2px solid #afafaf;
 `
 
 const StyledOrderNumberContainer = styled.div`

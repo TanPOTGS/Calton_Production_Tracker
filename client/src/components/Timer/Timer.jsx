@@ -12,7 +12,8 @@ import {
 } from 'react-redux'
 import {
   getOrder,
-  reset
+  updateOrder,
+  resetOrders
 } from '../../features/orders/orderSlice';
 import Spinner from '../Spinner/Spinner'
 import styled from 'styled-components';
@@ -38,10 +39,13 @@ function Timer(props) {
   } = timerData
 
   const {
-    handleTaskSelection
+    handleTaskSelection,
+    selectedTask,
+    orderData,
+    disableTask
   } = props
 
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   // const navigate = useNavigate()
 
   const {user} = useSelector((state) => state.auth)
@@ -99,8 +103,22 @@ function Timer(props) {
     setTimerStatus(2);
   }
 
-  const resetTimer = () => {
+  const submitTime = () => {
+    let taskData = {
+      _id: orderData._id,
+      trimDepartment: {
+        [selectedTask]: {
+          isComplete: true,
+          completionTime: `${timerData.h}:${timerData.m}:${timerData.s}:${timerData.ms}`,
+          completedBy: user.name
+        }
+      }
+    }
     clearInterval(timerInterval);
+    dispatch(updateOrder(taskData))
+    // console.log(taskData)
+    disableTask(selectedTask)
+    handleTaskSelection(false)
     setTimerStatus(0);
     setTimerData({ms:0, s:0, m:0, h:0})
   }
@@ -132,7 +150,7 @@ function Timer(props) {
         {timerStatus === 2 ? (
           <>
             <StyledResumeButton onClick={startTimer}>Resume</StyledResumeButton>
-            <StyledFinishedButton onClick={resetTimer}>Finish</StyledFinishedButton>
+            <StyledFinishedButton onClick={submitTime}>Finish</StyledFinishedButton>
           </>
         ) : (
           null

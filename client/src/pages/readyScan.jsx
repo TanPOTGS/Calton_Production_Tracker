@@ -11,7 +11,7 @@ import {
 } from 'react-redux'
 import {
   getOrder,
-  reset
+  resetOrders
 } from '../features/orders/orderSlice';
 import DepartmentTasks from '../components/DepartmentTasks/DepartmentTasks';
 import Spinner from '../components/Spinner/Spinner';
@@ -35,7 +35,7 @@ function ReadyScan() {
 
   useEffect(() => {
     if(!user) {
-      dispatch(reset())
+      dispatch(resetOrders())
       navigate('/login')
     }
 
@@ -206,6 +206,22 @@ const StyledOrderNotesDisplay = styled.div`
 const StyledOrderNotesBody = styled.p`
   color: #ffffff;
   white-space: pre-wrap;
+  font-weight: 700;
+  font-size: 1.3rem;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: .5vw;
+    height: 1vh;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #88f7ba;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #009879;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: #009879;
+  }
 `
 
 const StyledTasksView = styled.div`

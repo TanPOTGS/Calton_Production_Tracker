@@ -18,6 +18,9 @@ import {
   logout, 
   reset
 } from '../../features/auth/authSlice'
+import { 
+  resetOrders
+} from '../../features/orders/orderSlice'
 import caltonlogo from '../../caltonlogo.png'
 import styled from 'styled-components';
 
@@ -29,6 +32,7 @@ function Header() {
   const onLogout = () => {
     dispatch(logout())
     dispatch(reset())
+    dispatch(resetOrders())
     navigate('/')
   }
 

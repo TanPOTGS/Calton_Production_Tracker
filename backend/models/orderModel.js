@@ -190,7 +190,175 @@ const OrderSchema = new Schema({
     default: ''
   },
   comments: [],
-  fiberglass: {
+  fiberglassDepartment: {
+    siDate: {
+      type: Date,
+      default: ''
+    },
+    siEmployee: {
+      type: String,
+      default: ''
+    },
+    soDate: {
+      type: Date,
+      default: ''
+    },
+    soEmployee: {
+      type: String,
+      default: ''
+    },
+  },
+  hardwareDepartment: {
+    siDate: {
+      type: Date,
+      default: ''
+    },
+    siEmployee: {
+      type: String,
+      default: ''
+    },
+    soDate: {
+      type: Date,
+      default: ''
+    },
+    soEmployee: {
+      type: String,
+      default: ''
+    },
+  },
+  trimDepartment: {
+    siDate: {
+      type: Date,
+      default: ''
+    },
+    siEmployee: {
+      type: String,
+      default: ''
+    },
+    task1: {
+      isComplete: {
+        type: Boolean,
+        default: false
+      },
+      completionTime: {
+        type: String
+      },
+      completedBy: {
+        type: String,
+      }
+    },
+    task2: {
+      isComplete: {
+        type: Boolean,
+        default: false
+      },
+      completionTime: {
+        type: String
+      },
+      completedBy: {
+        type: String,
+      }
+    },
+    task3: {
+      isComplete: {
+        type: Boolean,
+        default: false
+      },
+      completionTime: {
+        type: String
+      },
+      completedBy: {
+        type: String,
+      }
+    },
+    task4: {
+      isComplete: {
+        type: Boolean,
+        default: false
+      },
+      completionTime: {
+        type: String
+      },
+      completedBy: {
+        type: String,
+      }
+    },
+    task5: {
+      isComplete: {
+        type: Boolean,
+        default: false
+      },
+      completionTime: {
+        type: String
+      },
+      completedBy: {
+        type: String,
+      }
+    },
+    task6: {
+      isComplete: {
+        type: Boolean,
+        default: false
+      },
+      completionTime: {
+        type: String
+      },
+      completedBy: {
+        type: String,
+      }
+    },
+    task7: {
+      isComplete: {
+        type: Boolean,
+        default: false
+      },
+      completionTime: {
+        type: String
+      },
+      completedBy: {
+        type: String,
+      }
+    },
+    task8: {
+      isComplete: {
+        type: Boolean,
+        default: false
+      },
+      completionTime: {
+        type: String
+      },
+      completedBy: {
+        type: String,
+      }
+    },
+    soDate: {
+      type: Date,
+      default: ''
+    },
+    soEmployee: {
+      type: String,
+      default: ''
+    },
+  },
+  interiorsDepartment: {
+    siDate: {
+      type: Date,
+      default: ''
+    },
+    siEmployee: {
+      type: String,
+      default: ''
+    },
+    soDate: {
+      type: Date,
+      default: ''
+    },
+    soEmployee: {
+      type: String,
+      default: ''
+    },
+  },
+  shippingDepartment: {
     siDate: {
       type: Date,
       default: ''

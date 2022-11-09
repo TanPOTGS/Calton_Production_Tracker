@@ -13,7 +13,7 @@ import {
 import {
   getOrders,
   updateOrdersStatus,
-  reset
+  resetOrders
 } from '../features/orders/orderSlice';
 import Spinner from '../components/Spinner/Spinner';
 import Modal from '../components/Modal/Modal';
@@ -51,7 +51,7 @@ function Production(props) {
     
     if (isError && user) {
       console.log(message);
-      dispatch(reset())
+      dispatch(resetOrders())
     }
 
     dispatch(getOrders())
