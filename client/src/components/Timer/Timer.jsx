@@ -107,6 +107,7 @@ function Timer(props) {
     let taskData = {
       _id: orderData._id,
       trimDepartment: {
+        ...orderData.trimDepartment,
         [selectedTask]: {
           isComplete: true,
           completionTime: `${timerData.h}:${timerData.m}:${timerData.s}:${timerData.ms}`,
