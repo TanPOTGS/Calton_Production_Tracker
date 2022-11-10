@@ -13,6 +13,7 @@ import {
 } from 'react-redux';
 import {
   getOrders,
+  updateOrder,
   updateOrdersStatus,
   resetOrders
 } from '../features/orders/orderSlice';
@@ -27,6 +28,7 @@ import {
 import styled from 'styled-components';
 
 function OrderReview(props) {
+  const [selectedOrders, setSelectedOrders] = useState([])
   const [sidebarData, setSidebarData] = useState({
     order: null,
     orderNumber: '',
@@ -151,13 +153,11 @@ function OrderReview(props) {
     return <Spinner />
   }
 
-  const selectedOrders = []
-
-  const handleOrderSelect = (isChecked, orderId) => {
+  const handleOrderSelect = (isChecked, orderDataForToggle) => {
     if(!isChecked) {
-      selectedOrders.push(orderId)
+      selectedOrders.push(orderDataForToggle)
     } else {
-      const i = selectedOrders.indexOf(orderId)
+      const i = selectedOrders.indexOf(orderDataForToggle)
       selectedOrders.splice(i, 1)
     }
   }
@@ -196,28 +196,85 @@ function OrderReview(props) {
   }
 
   const moveOrdersToNewStage = (status) => {
+    const selectedIds = []
+
+    selectedOrders.map((selectedOrder) => {
+      selectedIds.push(selectedOrder.orderId)
+    })
+
     const ordersToUpdate = {
       status: status,
-      ids: selectedOrders
+      ids: selectedIds
     }
 
     dispatch(updateOrdersStatus(ordersToUpdate))
+    setSelectedOrders([])
+  }
+
+  const toggleOrderColor = (prop) => {
+    let orderToUpdate = {};
+
+    selectedOrders.map((selectedOrder) => {
+      orderToUpdate = {
+        _id: selectedOrder.orderId,
+        [prop]: !selectedOrder[prop],
+      }
+
+      dispatch(updateOrder(orderToUpdate))
+      setSelectedOrders([])
+    })
   }
 
   return (
     <StyledOrderReviewViewContainer>
       <StyledMenuContainer>
-        <StyledMenuButton onClick={toggleCreateOrderModal}>
+        <StyledNewOrderButton onClick={toggleCreateOrderModal}>
           Add New Order
-        </StyledMenuButton>
-        <StyledMenuButton onClick={() => moveOrdersToNewStage('production')}>
+        </StyledNewOrderButton>
+        <StyledMenuButton
+          onClick={() => moveOrdersToNewStage('production')}
+          disabled={selectedOrders.length < 1}
+          backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
+          cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
+        >
           Move To Production
         </StyledMenuButton>
-        <StyledMenuButton onClick={() => moveOrdersToNewStage('hold')}>
+        <StyledMenuButton
+          onClick={() => moveOrdersToNewStage('hold')}
+          disabled={selectedOrders.length < 1}
+          backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
+          cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
+        >
           Move To Hold
         </StyledMenuButton>
-        <StyledMenuButton onClick={() => moveOrdersToNewStage('closed')}>
+        <StyledMenuButton
+          onClick={() => moveOrdersToNewStage('closed')}
+          disabled={selectedOrders.length < 1}
+          backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
+          cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
+        >
           Move To Closed
+        </StyledMenuButton>
+        <StyledMenuButton
+          onClick={() => toggleOrderColor('isMarigold')}
+          disabled={selectedOrders.length < 1}
+          backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
+          cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
+        >
+          Toggle Marigold
+        </StyledMenuButton>
+        <StyledMenuButton
+          onClick={() => toggleOrderColor('expedite')}
+          disabled={selectedOrders.length < 1}
+          backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
+          cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
+        >
+          Toggle Expedite
         </StyledMenuButton>
       </StyledMenuContainer>
       {displayModal && <Modal
@@ -432,7 +489,7 @@ const StyledMenuContainer = styled.div`
   margin: 0;
 `
 
-const StyledMenuButton = styled.button`
+const StyledNewOrderButton = styled.button`
   padding: 10px;
   border: 1px solid #000;
   border-radius: 5px;
@@ -446,6 +503,23 @@ const StyledMenuButton = styled.button`
   &:hover {
     color: #000000;
     background-color: #88f7ba;
+  }
+`
+
+const StyledMenuButton = styled.button`
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background: #000000;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: ${props => props.cursor};
+  text-align: center;
+  appearance: button;
+  transition: all 0.3s ease 0s;
+  &:hover {
+    color: ${props => props.textColor};
+    background-color: ${props => props.backgroundColor};
   }
 `
 

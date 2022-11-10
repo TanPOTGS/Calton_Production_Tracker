@@ -13,6 +13,9 @@ import {
   getOrder,
   resetOrders
 } from '../features/orders/orderSlice';
+import {
+  FaStar
+} from 'react-icons/fa'
 import DepartmentTasks from '../components/DepartmentTasks/DepartmentTasks';
 import Spinner from '../components/Spinner/Spinner';
 import styled from 'styled-components';
@@ -79,16 +82,24 @@ function ReadyScan() {
         <StyledGrid >
           <StyledOrderDataContainer>
             <StyledWcNumberDisplay>
-              <StyledWcNumberTitle>WC Number:</StyledWcNumberTitle>
-              <StyledWcNumberBody>{orders[0].wcNumber}</StyledWcNumberBody>
+              <StyledTemplateContainer>
+                <StyledWcNumberTitle>WC Number:</StyledWcNumberTitle>
+                <StyledTemplateStar starcolor={orders[0].newTemplate ? '#ffed00' : 'transparent'} />
+              </StyledTemplateContainer>
+              <StyledWcNumberBody expediteColor={orders[0].expedite ? 'red' : '#ffffff'}>{orders[0].wcNumber}</StyledWcNumberBody>
             </StyledWcNumberDisplay>
             <StyledModelCodeDisplay>
               <StyledModelCodeTitle>Model Code:</StyledModelCodeTitle>
-              <StyledModelCodeBody>{orders[0].modelCode}</StyledModelCodeBody>
+              <StyledModelCodeBody
+                expediteColor={orders[0].expedite ? 'red' : '#ffffff'}
+                marigoldColor={orders[0].isMarigold ? '#ffed00' : 'transparent'}
+              >
+                {orders[0].modelCode}
+              </StyledModelCodeBody>
             </StyledModelCodeDisplay>
             <StyledRalNumberDisplay>
               <StyledRalNumberTitle>RAL:</StyledRalNumberTitle>
-              <StyledRalNumberBody>{orders[0].ralNumber}</StyledRalNumberBody>
+              <StyledRalNumberBody expediteColor={orders[0].expedite ? 'red' : '#ffffff'}>{orders[0].ralNumber}</StyledRalNumberBody>
             </StyledRalNumberDisplay>
           </StyledOrderDataContainer>
           <StyledOrderNotesContainer>
@@ -140,12 +151,22 @@ const StyledWcNumberDisplay = styled.div`
   padding: 10px;
 `
 
+const StyledTemplateContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 const StyledWcNumberTitle = styled.h2`
   color: #009879;
 `
 
+const StyledTemplateStar = styled(FaStar)`
+  color: ${props => props.starcolor};
+  font-size: 30px;
+`
+
 const StyledWcNumberBody = styled.h1`
-  color: #ffffff;
+  color: ${props => props.expediteColor};
 `
 
 const StyledModelCodeDisplay = styled.div`
@@ -157,7 +178,8 @@ const StyledModelCodeTitle = styled.h2`
 `
 
 const StyledModelCodeBody = styled.h1`
-  color: #ffffff;
+  color: ${props => props.expediteColor};
+  background-color: ${props => props.marigoldColor};
 `
 
 const StyledRalNumberDisplay = styled.div`
@@ -169,7 +191,7 @@ const StyledRalNumberTitle = styled.h2`
 `
 
 const StyledRalNumberBody = styled.h1`
-  color: #fff
+  color: ${props => props.expediteColor};
 `
 
 const StyledOrderNotesContainer = styled.div`

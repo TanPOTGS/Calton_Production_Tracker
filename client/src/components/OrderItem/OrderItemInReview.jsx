@@ -87,8 +87,13 @@ function OrderItemInReview(props) {
   }
 
   const toggleCheckbox = () => {
+    const orderDataForToggle = {
+      orderId: order._id,
+      isMarigold: order.isMarigold,
+      expedite: order.expedite
+    }
     setCheckbox(!isChecked)
-    handleOrderSelect(isChecked, order._id)
+    handleOrderSelect(isChecked, orderDataForToggle)
   }
 
   let reviewStatusColor;
@@ -102,7 +107,7 @@ function OrderItemInReview(props) {
   }
 
   return (
-    <StyledOrderItem onClick={() => handleOrderNotesDisplay(order)}>
+    <StyledOrderItem onClick={() => handleOrderNotesDisplay(order)} expediteColor={order.expedite ? 'red' : '#000000'}>
       <StyledActionsSegment>
         <StyledCheckbox
           type='checkbox'
@@ -116,13 +121,13 @@ function OrderItemInReview(props) {
         </StyledActionButton>
       </StyledActionsSegment>
       <StyledReviewStatusSegment backgroundStatusColor={reviewStatusColor}>{order.reviewStatus}</StyledReviewStatusSegment>
-      <StyledOrderSegment>{convertDate(order.submitDate)}</StyledOrderSegment>
-      <StyledOrderSegment>{convertDate(order.reviewDate)}</StyledOrderSegment>
-      <StyledOrderSegment>{convertDate(order.eligibleForProductionDate)}</StyledOrderSegment>
-      <StyledOrderSegment>{order.wcNumber}</StyledOrderSegment>
-      <StyledModelCodeSegment>{order.modelCode}</StyledModelCodeSegment>
-      <StyledOrderSegment>{order.customer}</StyledOrderSegment>
-      <StyledOrderSegment>{order.caltonRep}</StyledOrderSegment>
+      <StyledOrderSegment marigoldColor={order.isMarigold ? '#ffed00' : 'transparent'}>{convertDate(order.submitDate)}</StyledOrderSegment>
+      <StyledOrderSegment marigoldColor={order.isMarigold ? '#ffed00' : 'transparent'}>{convertDate(order.reviewDate)}</StyledOrderSegment>
+      <StyledOrderSegment marigoldColor={order.isMarigold ? '#ffed00' : 'transparent'}>{convertDate(order.eligibleForProductionDate)}</StyledOrderSegment>
+      <StyledOrderSegment marigoldColor={order.isMarigold ? '#ffed00' : 'transparent'}>{order.wcNumber}</StyledOrderSegment>
+      <StyledModelCodeSegment marigoldColor={order.isMarigold ? '#ffed00' : 'transparent'}>{order.modelCode}</StyledModelCodeSegment>
+      <StyledOrderSegment marigoldColor={order.isMarigold ? '#ffed00' : 'transparent'}>{order.customer}</StyledOrderSegment>
+      <StyledOrderSegment marigoldColor={order.isMarigold ? '#ffed00' : 'transparent'}>{order.caltonRep}</StyledOrderSegment>
       <StyledFiberglassOneSegment>{moldCode}</StyledFiberglassOneSegment>
       <StyledFiberglassOneSegment>{secCode}</StyledFiberglassOneSegment>
       <StyledFiberglassOneSegment>{order.ralNumber}</StyledFiberglassOneSegment>
@@ -168,6 +173,7 @@ const StyledOrderItem = styled.tr`
   border-top: 2px solid #dddddd;
   border-bottom: 2px solid #dddddd;
   font-weight: bold;
+  color: ${props => props.expediteColor};
   &:nth-of-type(even) {
     background-color: #f3f3f3;
   }
@@ -181,11 +187,13 @@ const StyledOrderItem = styled.tr`
 const StyledOrderSegment = styled.td`
   padding: 12px 15px;
   border-right: 1px solid #afafaf;
+  background-color: ${props => props.marigoldColor};
 `
 
 const StyledReviewStatusSegment = styled.td`
   padding: 12px 15px;
   border-right: 1px solid #afafaf;
+  color: #000000;
   background-color: ${props => props.backgroundStatusColor};
 `
 
@@ -193,6 +201,7 @@ const StyledModelCodeSegment = styled.td`
   padding: 12px 15px;
   border-right: 1px solid #afafaf;
   white-space:nowrap;
+  background-color: ${props => props.marigoldColor};
 `
 
 const StyledFiberglassOneSegment = styled.td`

@@ -71,7 +71,13 @@ function UpdateOrderForm(props) {
     invoiceDate: convertedInvoiceDate,
     invoiceSentVia: orderDataForModal.invoiceSentVia,
     paymentDueDate: convertedPaymentDueDate,
-    paymentReceivedDate: convertedPaymentReceivedDate
+    paymentReceivedDate: convertedPaymentReceivedDate,
+    newTemplate: orderDataForModal.newTemplate,
+    containsMerch: orderDataForModal.containsMerch,
+    isIndividualCustomer: orderDataForModal.isIndividualCustomer,
+    isBackInShopForRepair: orderDataForModal.isBackInShopForRepair,
+    isFloorReady: orderDataForModal.isFloorReady,
+    hasProductionError: orderDataForModal.hasProductionError
   })
   
   const {
@@ -95,7 +101,13 @@ function UpdateOrderForm(props) {
     invoiceDate,
     invoiceSentVia,
     paymentDueDate,
-    paymentReceivedDate
+    paymentReceivedDate,
+    newTemplate,
+    containsMerch,
+    isIndividualCustomer,
+    isBackInShopForRepair,
+    isFloorReady,
+    hasProductionError
   } = formData
 
   const dispatch = useDispatch()
@@ -136,7 +148,13 @@ function UpdateOrderForm(props) {
       invoiceDate,
       invoiceSentVia,
       paymentDueDate,
-      paymentReceivedDate
+      paymentReceivedDate,
+      newTemplate,
+      containsMerch,
+      isIndividualCustomer,
+      isBackInShopForRepair,
+      isFloorReady,
+      hasProductionError
     }
 
     dispatch(updateOrder(newOrderData))
@@ -147,19 +165,27 @@ function UpdateOrderForm(props) {
     }
   }
   
-  const handlePageTurn = () => {
-    if(page === 1) {
+  const handlePageTurn = (arrow) => {
+    if(page === 1 || page === 3) {
       setFormPageData({
         page: 2,
         leftArrowDisabled: false,
-        rightArrowDisabled: true
-      })
-    } else if(page === 2) {
-      setFormPageData({
-        page: 1,
-        leftArrowDisabled: true,
         rightArrowDisabled: false
       })
+    } else if(page === 2) {
+      if(arrow === "left") {
+        setFormPageData({
+          page: 1,
+          leftArrowDisabled: true,
+          rightArrowDisabled: false
+        })
+      } else if(arrow === "right") {
+        setFormPageData({
+          page: 3,
+          leftArrowDisabled: false,
+          rightArrowDisabled: true
+        })
+      }
     }
   }
 
@@ -170,7 +196,7 @@ function UpdateOrderForm(props) {
           disabled={leftArrowDisabled}
           inactiveColor={leftArrowDisabled ? "#ffffff" : "#000000"}
           inactiveCursor={leftArrowDisabled ? "default" : "pointer"}
-          onClick={handlePageTurn}
+          onClick={() => handlePageTurn("left")}
         >
           <AiOutlineArrowLeft />
         </StyledLeftArrowButton>
@@ -182,7 +208,7 @@ function UpdateOrderForm(props) {
           disabled={rightArrowDisabled}
           inactiveColor={rightArrowDisabled ? "#ffffff" : "#000000"}
           inactiveCursor={rightArrowDisabled ? "default" : "pointer"}
-          onClick={handlePageTurn}
+          onClick={() => handlePageTurn("right")}
         >
           <AiOutlineArrowRight />
         </StyledRightArrowButton>
@@ -456,6 +482,86 @@ function UpdateOrderForm(props) {
               </StyledInnerInputContainer>
             </>
           ) : null}
+          {page === 3 ? (
+            <>
+              <StyledInnerInputContainer>
+                <StyledFormGroup>
+                  <StyledCheckboxInput 
+                    type="checkbox" 
+                    name='newTemplate'
+                    id='newTemplate'
+                    value={!newTemplate}
+                    onChange={onChange}
+                    // required
+                  />
+                  <StyledCheckboxSpan></StyledCheckboxSpan>
+                  <StyledCheckboxLabel htmlFor="newTemplate">Using new template?</StyledCheckboxLabel>
+                </StyledFormGroup>
+                <StyledFormGroup>
+                  <StyledCheckboxInput 
+                    type="checkbox" 
+                    name='isFloorReady'
+                    id='isFloorReady'
+                    value={!isFloorReady}
+                    onChange={onChange}
+                    // required
+                  />
+                  <StyledCheckboxSpan></StyledCheckboxSpan>
+                  <StyledCheckboxLabel htmlFor="isFloorReady">Is Floor Ready case?</StyledCheckboxLabel>
+                </StyledFormGroup>
+                <StyledFormGroup>
+                  <StyledCheckboxInput 
+                    type="checkbox" 
+                    name='containsMerch'
+                    id='containsMerch'
+                    value={!containsMerch}
+                    onChange={onChange}
+                    // required
+                  />
+                  <StyledCheckboxSpan></StyledCheckboxSpan>
+                  <StyledCheckboxLabel htmlFor="containsMerch">Order contains merch?</StyledCheckboxLabel>
+                </StyledFormGroup>
+              </StyledInnerInputContainer>
+              <StyledInnerInputContainer>
+              <StyledFormGroup>
+                  <StyledCheckboxInput 
+                    type="checkbox" 
+                    name='isBackInShopForRepair'
+                    id='isBackInShopForRepair'
+                    value={!isBackInShopForRepair}
+                    onChange={onChange}
+                    // required
+                  />
+                  <StyledCheckboxSpan></StyledCheckboxSpan>
+                  <StyledCheckboxLabel htmlFor="isBackInShopForRepair">Is back in the shop for repairs?</StyledCheckboxLabel>
+                </StyledFormGroup>
+                <StyledFormGroup>
+                  <StyledCheckboxInput 
+                    type="checkbox" 
+                    name='hasProductionError'
+                    id='hasProductionError'
+                    value={!hasProductionError}
+                    onChange={onChange}
+                    // required
+                  />
+                  <StyledCheckboxSpan></StyledCheckboxSpan>
+                  <StyledCheckboxLabel htmlFor="hasProductionError">Has production errors?</StyledCheckboxLabel>
+                </StyledFormGroup>
+                <StyledFormGroup>
+                  <StyledCheckboxInput 
+                    type="checkbox" 
+                    name='isIndividualCustomer'
+                    id='isIndividualCustomer'
+                    value={!isIndividualCustomer}
+                    onChange={onChange}
+                    // required
+                  />
+                  <StyledCheckboxSpan></StyledCheckboxSpan>
+                  <StyledCheckboxLabel htmlFor="isIndividualCustomer">Direct customer?</StyledCheckboxLabel>
+                </StyledFormGroup>
+              </StyledInnerInputContainer>
+            </>
+          ) : null}
         </StyledOuterInputContainer>
         <StyledFormButtonContainer>
           <StyledSubmitButton type='submit'>
@@ -595,6 +701,52 @@ const StyledTextInput = styled.input`
   &:focus ~ span:before {
     width: 100%;
   }
+`
+
+const StyledCheckboxInput = styled.input`
+  color: #000000;
+  width: 100%;
+  padding: 0 5px;
+  height: 30px;
+  // font-size: 16px;
+  border: none;
+  background: none;
+  outline: none;
+  &:focus ~ label {
+    top: -5px;
+    color: #009879;
+  }
+  &:valid ~ label {
+    top: -10px;
+    color: #009879;
+  }
+  // &:focus ~ span:before {
+  //   width: 100%;
+  // }
+`
+
+const StyledCheckboxSpan = styled.span`
+  &:before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #009879;
+    transition: .4s;
+  }
+`
+
+const StyledCheckboxLabel = styled.label`
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  color: #000000;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
+  transition: .4s;
 `
 
 const StyledDateInput = styled.input`

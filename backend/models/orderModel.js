@@ -61,6 +61,26 @@ const OrderSchema = new Schema({
     type: Boolean,
     default: false
   },
+  isMarigold: {
+    type: Boolean,
+    default: false
+  },
+  isIndividualCustomer: {
+    type: Boolean,
+    default: false
+  },
+  isBackInShopForRepair: {
+    type: Boolean,
+    default: false
+  },
+  isFloorReady: {
+    type: Boolean,
+    default: false
+  },
+  hasProductionError: {
+    type: Boolean,
+    default: false
+  },
   engraving: {
     type: String,
     default: 'N/A'
