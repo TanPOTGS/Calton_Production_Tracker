@@ -75,7 +75,9 @@ function ReadyScan() {
     return <Spinner />
   }
 
-
+  let textWithMarigold;
+  orders[0].isMarigold ? textWithMarigold = '#ffffff' : textWithMarigold = '#000000';
+  
   return (
     <StyledScanViewContainer ref={ref} tabIndex={-1} onKeyDown={handleBarcode}>
       {orders.length > 0 ? (
@@ -91,7 +93,7 @@ function ReadyScan() {
             <StyledModelCodeDisplay>
               <StyledModelCodeTitle>Model Code:</StyledModelCodeTitle>
               <StyledModelCodeBody
-                expediteColor={orders[0].expedite ? 'red' : '#ffffff'}
+                expediteColor={orders[0].expedite ? 'red' : textWithMarigold}
                 marigoldColor={orders[0].isMarigold ? '#ffed00' : 'transparent'}
               >
                 {orders[0].modelCode}
