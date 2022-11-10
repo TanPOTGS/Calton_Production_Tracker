@@ -78,7 +78,7 @@ function ReadyScan() {
   let textWithMarigold;
 
   if(orders.length > 0) {
-    orders[0].isMarigold ? textWithMarigold = '#ffffff' : textWithMarigold = '#000000';
+    orders[0].isMarigold ? textWithMarigold = '#000000' : textWithMarigold = '#ffffff';
   }
   
   return (
