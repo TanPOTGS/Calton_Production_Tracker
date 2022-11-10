@@ -76,7 +76,10 @@ function ReadyScan() {
   }
 
   let textWithMarigold;
-  orders[0].isMarigold ? textWithMarigold = '#ffffff' : textWithMarigold = '#000000';
+
+  if(orders.length > 0) {
+    orders[0].isMarigold ? textWithMarigold = '#ffffff' : textWithMarigold = '#000000';
+  }
   
   return (
     <StyledScanViewContainer ref={ref} tabIndex={-1} onKeyDown={handleBarcode}>
