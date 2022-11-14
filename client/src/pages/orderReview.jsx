@@ -91,12 +91,11 @@ function OrderReview(props) {
 
   const {
     orders,
-    isSuccess,
     isLoading,
     isError,
     message
   } = useSelector((state) => state.orders)
-  
+
   useEffect(() => {
     if(!user) {
       navigate('/login')
@@ -115,6 +114,10 @@ function OrderReview(props) {
     navigate,
     dispatch
   ])
+
+  if (isLoading) {
+    return <Spinner />
+  }
 
   const clearSidebarState = () => {
     setSidebarData({
@@ -147,19 +150,6 @@ function OrderReview(props) {
       orderNote: '',
       comments: []
     })
-  }
-
-  if (isLoading) {
-    return <Spinner />
-  }
-
-  const handleOrderSelect = (isChecked, orderDataForToggle) => {
-    if(!isChecked) {
-      selectedOrders.push(orderDataForToggle)
-    } else {
-      const i = selectedOrders.indexOf(orderDataForToggle)
-      selectedOrders.splice(i, 1)
-    }
   }
 
   const handleOrderNotesDisplay = (orderData) => {
@@ -195,34 +185,57 @@ function OrderReview(props) {
     })
   }
 
+  const handleOrderSelect = (isChecked, orderDataForToggle) => {
+    if(!isChecked) {
+      selectedOrders.push(orderDataForToggle)
+    } else {
+      const i = selectedOrders.indexOf(orderDataForToggle)
+      selectedOrders.splice(i, 1)
+    }
+  }
+  
   const moveOrdersToNewStage = (status) => {
     const selectedIds = []
+    let ordersToUpdate
 
-    selectedOrders.map((selectedOrder) => {
+    selectedOrders.map((selectedOrder) => 
       selectedIds.push(selectedOrder.orderId)
-    })
+    )
 
-    const ordersToUpdate = {
-      status: status,
-      ids: selectedIds
+    if(status === 'production') {
+      const today = new Date()
+      const shipDate = new Date()
+
+      shipDate.setDate(shipDate.getDate() + 52)
+
+      ordersToUpdate = {
+        status: status,
+        ids: selectedIds,
+        productionReceivedDate: today,
+        shipByDate: shipDate
+      }
+    } else {
+      ordersToUpdate = {
+        status: status,
+        ids: selectedIds
+      }
     }
 
     dispatch(updateOrdersStatus(ordersToUpdate))
     setSelectedOrders([])
+    clearSidebarState()
   }
 
   const toggleOrderColor = (prop) => {
-    let orderToUpdate = {};
-
     selectedOrders.map((selectedOrder) => {
-      orderToUpdate = {
+      let orderToUpdate = {
         _id: selectedOrder.orderId,
         [prop]: !selectedOrder[prop],
       }
 
       dispatch(updateOrder(orderToUpdate))
-      setSelectedOrders([])
     })
+    setSelectedOrders([])
   }
 
   return (
@@ -235,6 +248,7 @@ function OrderReview(props) {
           onClick={() => moveOrdersToNewStage('production')}
           disabled={selectedOrders.length < 1}
           backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          borderColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
           textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
           cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
         >
@@ -244,6 +258,7 @@ function OrderReview(props) {
           onClick={() => moveOrdersToNewStage('hold')}
           disabled={selectedOrders.length < 1}
           backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          borderColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
           textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
           cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
         >
@@ -253,6 +268,7 @@ function OrderReview(props) {
           onClick={() => moveOrdersToNewStage('closed')}
           disabled={selectedOrders.length < 1}
           backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          borderColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
           textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
           cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
         >
@@ -262,6 +278,7 @@ function OrderReview(props) {
           onClick={() => toggleOrderColor('isMarigold')}
           disabled={selectedOrders.length < 1}
           backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          borderColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
           textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
           cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
         >
@@ -271,6 +288,7 @@ function OrderReview(props) {
           onClick={() => toggleOrderColor('expedite')}
           disabled={selectedOrders.length < 1}
           backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          borderColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
           textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
           cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
         >
@@ -491,8 +509,10 @@ const StyledMenuContainer = styled.div`
 
 const StyledNewOrderButton = styled.button`
   padding: 10px;
-  border: 1px solid #000;
-  border-radius: 5px;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-right: 1px solid #009879;
   background: #000000;
   color: #ffffff;
   font-size: 16px;
@@ -502,14 +522,20 @@ const StyledNewOrderButton = styled.button`
   transition: all 0.3s ease 0s;
   &:hover {
     color: #000000;
+    border-top: 1px solid #88f7ba;
+    border-bottom: 1px solid #88f7ba;
+    border-left: 1px solid #88f7ba;
+    border-right: 1px solid #009879;
     background-color: #88f7ba;
   }
 `
 
 const StyledMenuButton = styled.button`
   padding: 10px;
-  border: 1px solid #000;
-  border-radius: 5px;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-left: 1px solid #009879;
+  border-right: 1px solid #009879;
   background: #000000;
   color: #ffffff;
   font-size: 16px;
@@ -519,6 +545,8 @@ const StyledMenuButton = styled.button`
   transition: all 0.3s ease 0s;
   &:hover {
     color: ${props => props.textColor};
+    border-top: 1px solid ${props => props.borderColor};
+    border-bottom: 1px solid ${props => props.borderColor};
     background-color: ${props => props.backgroundColor};
   }
 `

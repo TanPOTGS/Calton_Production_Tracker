@@ -7,7 +7,7 @@ import {
 } from 'react-icons/md'
 import styled from 'styled-components';
 
-function OrderItemInReview(props) {
+function OrderItemInHold(props) {
   const [isChecked, setCheckbox] = useState(false)
 
   const {
@@ -168,7 +168,7 @@ function OrderItemInReview(props) {
   )
 }
 
-export default OrderItemInReview
+export default OrderItemInHold
 
 const StyledOrderItem = styled.tr`
   position: relative;

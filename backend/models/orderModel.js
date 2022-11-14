@@ -210,6 +210,14 @@ const OrderSchema = new Schema({
     default: ''
   },
   comments: [],
+  productionReceivedDate: {
+    type: Date,
+    default: ''
+  },
+  shipByDate: {
+    type: Date,
+    default: ''
+  },
   fiberglassDepartment: {
     siDate: {
       type: Date,

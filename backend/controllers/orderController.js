@@ -122,7 +122,13 @@ const updateOrdersStatus = asyncHandler(async (req, res) => {
   //   throw new Error('Order not found')
   // }
 
-  const updatedOrders = await Order.updateMany({ _id: { $in: req.body.ids } }, { $set: { orderCurrentState: req.params.status } }, {
+  const data = {
+    orderCurrentState: req.params.status,
+    productionReceivedDate: req.body.productionReceivedDate,
+    shipByDate: req.body.shipByDate
+  }
+
+  const updatedOrders = await Order.updateMany({ _id: { $in: req.body.ids } }, { $set: data }, {
     new: true,
   });
 

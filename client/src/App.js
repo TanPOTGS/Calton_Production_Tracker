@@ -103,8 +103,36 @@ function App() {
                   closeModal={closeModal}
                 />}
               />
-              <Route path='/orders-hold' element={<OrdersHold />} />
-              <Route path='/orders-closed' element={<OrdersClosed />} />
+              <Route
+                path='/orders-hold'
+                element={<OrdersHold
+                  displayModal={displayModal}
+                  modalType={modalType}
+                  orderDataForModal={orderDataForModal}
+                  toggleCreateOrderModal={toggleCreateOrderModal}
+                  toggleDeleteOrderModal={toggleDeleteOrderModal}
+                  toggleEditOrderModal={toggleEditOrderModal}
+                  toggleEditContactInfoModal={toggleEditContactInfoModal}
+                  toggleAddCommentModal={toggleAddCommentModal}
+                  toggleAddOrderNoteModal={toggleAddOrderNoteModal}
+                  closeModal={closeModal}
+                />}
+              />
+              <Route
+                path='/orders-closed'
+                element={<OrdersClosed 
+                  displayModal={displayModal}
+                  modalType={modalType}
+                  orderDataForModal={orderDataForModal}
+                  toggleCreateOrderModal={toggleCreateOrderModal}
+                  toggleDeleteOrderModal={toggleDeleteOrderModal}
+                  toggleEditOrderModal={toggleEditOrderModal}
+                  toggleEditContactInfoModal={toggleEditContactInfoModal}
+                  toggleAddCommentModal={toggleAddCommentModal}
+                  toggleAddOrderNoteModal={toggleAddOrderNoteModal}
+                  closeModal={closeModal}
+                />}
+              />
               <Route
                 path='/production'
                 element={<Production 
@@ -114,6 +142,9 @@ function App() {
                   toggleCreateOrderModal={toggleCreateOrderModal}
                   toggleDeleteOrderModal={toggleDeleteOrderModal}
                   toggleEditOrderModal={toggleEditOrderModal}
+                  toggleEditContactInfoModal={toggleEditContactInfoModal}
+                  toggleAddCommentModal={toggleAddCommentModal}
+                  toggleAddOrderNoteModal={toggleAddOrderNoteModal}
                   closeModal={closeModal}
                 />}
               />

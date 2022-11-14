@@ -74,12 +74,12 @@ function Header() {
         <StyledNavList>
           {user ? (
             <>
-              {navButtons}
               <StyledNavListItems>
                 <StyledNavLink to='/production'>
                   Production
                 </StyledNavLink>
               </StyledNavListItems>
+              {navButtons}
               <StyledNavListItems>
                 <StyledButton onClick={onLogout}>
                   <FaSignOutAlt />Logout
