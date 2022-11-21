@@ -185,7 +185,6 @@ function AddCommentForm(props) {
                     ...prevState,
                     commentRecipients: prevState.commentRecipients.filter((rr) => rr.name !== r.name)
                   }))
-                  // console.log("I've been removed")
                 }>
                   x
                 </StyledRecipientRemove>

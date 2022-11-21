@@ -424,7 +424,7 @@ function OrderReview(props) {
             </StyledContactInfo>
             <StyledOrderNotesContainer>
               <StyledOrderNotesHeader>
-                <h2>Important Notes About Build:</h2>
+                <h2>Important Notes About Build</h2>
                 {order ? (
                   <StyledAddCommentIcon 
                     onClick={() => toggleAddOrderNoteModal(order)}
@@ -444,8 +444,8 @@ function OrderReview(props) {
               </StyledOrderNoteBody>
             </StyledOrderNotesContainer>
             <StyledCommentsContainer>
-              <StyledCommentHeaderContainer>
-                <h2>Comments:</h2>
+              <StyledCommentsHeaderContainer>
+                <h2>Comments</h2>
                 {order ? (
                 <StyledAddCommentIcon 
                   onClick={() => toggleAddCommentModal(order)}
@@ -453,39 +453,39 @@ function OrderReview(props) {
               ) : (
                 null
               )}
-              </StyledCommentHeaderContainer>
+              </StyledCommentsHeaderContainer>
               {comments.length > 0 ? (
-              <div>
-                {comments.map((comment) => (
-                  <StyledCommentBody 
-                    key={comment.commentId}
-                  >
-                    {comment.recipients.length >= 1 ? (
-                      <>
-                        <p>People Tagged:</p>
-                        <ul>
-                          {comment.recipients.map((recipient) => (
-                            <li>{recipient}</li>
-                          ))}
-                        </ul>
-                      </>
-                    ) : (
-                      null
-                    )}
-                    <StyledComment>{comment.body}</StyledComment>
-                    <StyledCommentAuthor>Posted by: {comment.author}</StyledCommentAuthor>
-                  </StyledCommentBody>
-                ))}
-              </div>
-            ) : (
-              <div>
-                {order ? (
-                  <h3>No comments to display</h3>
-                ) : (
-                  null
-                )}
-              </div>
-            )}
+                <StyledCommentsBodyContainer>
+                  {comments.map((comment) => (
+                    <StyledCommentBody 
+                      key={comment.commentId}
+                    >
+                      {comment.recipients.length >= 1 ? (
+                        <StyledTaggedUsersContainer>
+                          <StyledTaggedUsersHeader>Tagged:</StyledTaggedUsersHeader>
+                          <StyledTaggedUsersList>
+                            {comment.recipients.map((recipient) => (
+                              <StyledTaggedUser>{recipient}</StyledTaggedUser>
+                            ))}
+                          </StyledTaggedUsersList>
+                        </StyledTaggedUsersContainer>
+                      ) : (
+                        null
+                      )}
+                      <StyledComment>{comment.body}</StyledComment>
+                      <StyledCommentAuthor>Posted by: {comment.author}</StyledCommentAuthor>
+                    </StyledCommentBody>
+                  ))}
+                </StyledCommentsBodyContainer>
+              ) : (
+                <div>
+                  {order ? (
+                    <h3>No comments to display</h3>
+                  ) : (
+                    null
+                  )}
+                </div>
+              )}
             </StyledCommentsContainer>
           </StyledSidebarBody>
         </StyledSidebarContainer>
@@ -609,7 +609,6 @@ const StyledSidebarContainer = styled.div`
 `
 
 const StyledSidebarHeader = styled.div`
-  // border-bottom: 5px solid #009879;
   background-color: #e8e6e6;
   height: 10%;
 `
@@ -637,7 +636,7 @@ const StyledSidebarBody = styled.div`
 `
 
 const StyledContactInfo = styled.div`
-  border-bottom: 3px solid #afafaf;
+  border-bottom: 10px solid #e8e8e8;
 `
 
 const StyledBillingContainer = styled.div`
@@ -650,32 +649,41 @@ const StyledShippingContainer = styled.div`
 
 const StyledOrderNotesContainer = styled.div`
   padding: 10px;
-  border-bottom: 3px solid #afafaf;
+  border-bottom: 10px solid #e8e8e8;
 `
 
 const StyledOrderNotesHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 0 10px 0;
+  border-bottom: 2px solid #009879;
 `
 
 const StyledOrderNoteBody = styled.div`
-  padding: 10px;
+  // padding: 10px;
   white-space: pre-wrap;
 `
 
 const StyledOrderNote = styled.p`
   font-weight: 700;
+  padding: 20px 0;
 `
 
 const StyledCommentsContainer = styled.div`
   padding: 10px;
 `
 
-const StyledCommentHeaderContainer = styled.div`
+const StyledCommentsHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 0 5px 0;
+  border-bottom: 2px solid #009879;
+`
+
+const StyledCommentsBodyContainer = styled.div`
+  
 `
 
 const StyledAddCommentIcon = styled(MdAddComment)`
@@ -686,20 +694,37 @@ const StyledAddCommentIcon = styled(MdAddComment)`
   cursor: pointer;
 `
 
+const StyledCommentBody = styled.div`
+  padding: 20px 5px;
+  border-bottom: 2px solid #009879;
+`
+
+const StyledTaggedUsersContainer = styled.div`
+  margin: 0 0 40px 0;
+`
+
+const StyledTaggedUsersHeader = styled.p`
+  margin: 0 0 10px 0;
+  font-weight: 700;
+`
+
+const StyledTaggedUsersList = styled.ul`
+  list-style-type: none;
+`
+
+const StyledTaggedUser = styled.li`
+  padding: 2px 5px;
+  background-color: #e8e8e8;
+`
+
 const StyledComment = styled.p`
-  // padding: 20px 5px;
+  
 `
 
 const StyledCommentAuthor = styled.p`
   padding-top: 10px;
   font-size: .7rem;
   font-weight: 700;
-`
-
-const StyledCommentBody = styled.div`
-  // display: flex;
-  padding: 20px 5px;
-  border-bottom: 2px solid #afafaf;
 `
 
 const StyledOrderNumberContainer = styled.div`
@@ -734,10 +759,6 @@ const StyledEmailTitle = styled.h3`
   padding: 10px 0;
   color: #009879;
 `
-
-// const StyledEmail = styled.p`
-//   overflow-wrap: anywhere;
-// `
 
 const StyledPhoneTitle = styled.h3`
   padding: 10px 0;
