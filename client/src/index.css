@@ -8,8 +8,11 @@
 
 body {
   background: linear-gradient(120deg, #295135, #62BF77);
-  /* border: 3px solid; */
-  /* border-color: #000000; */
   height: 100vh;
-  /* overflow: hidden; */
+}
+
+@media print {
+  body {
+    height: auto;
+  }
 }

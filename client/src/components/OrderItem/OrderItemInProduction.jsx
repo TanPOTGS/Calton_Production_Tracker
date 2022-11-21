@@ -35,7 +35,7 @@ function OrderItemInProduction(props) {
 
       const convertedAge = rawAge / 86400000
 
-      return Math.floor(convertedAge)
+      return Math.ceil(convertedAge)
     }
   }
 
@@ -48,8 +48,6 @@ function OrderItemInProduction(props) {
     setCheckbox(!isChecked)
     handleOrderSelect(isChecked, orderDataForToggle)
   }
-
-  let age = 56;
 
   return (
     <StyledOrderItem

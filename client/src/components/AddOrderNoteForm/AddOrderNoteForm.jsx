@@ -11,7 +11,7 @@ import {
 import { RiAddFill } from 'react-icons/ri'
 import styled from 'styled-components';
 
-function CreateOrderNoteForm(props) {
+function AddOrderNoteForm(props) {
   const {
     closeModal,
     orderDataForModal
@@ -96,7 +96,7 @@ function CreateOrderNoteForm(props) {
   )
 }
 
-export default CreateOrderNoteForm
+export default AddOrderNoteForm
 
 const StyledFormContainer = styled.section`
   background-color: #ffffff;

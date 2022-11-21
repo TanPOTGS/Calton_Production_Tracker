@@ -67,6 +67,19 @@ const updateOrdersStatus = async (orderData, token) => {
   return response.data
 }
 
+//Move in and out of Fiberglass
+const fiberglassSignInAndOut = async (orderData, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const response = await axios.put(API_URL + orderData.ids + '/updateFiberglassStatus', orderData, config)
+
+  return response.data
+}
+
 //Add comment to order
 const addComment = async (orderData, token) => {
   const config = {
@@ -99,6 +112,7 @@ const orderService = {
   getOrder,
   updateOrder,
   updateOrdersStatus,
+  fiberglassSignInAndOut,
   addComment,
   deleteOrder
 }

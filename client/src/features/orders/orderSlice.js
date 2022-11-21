@@ -77,6 +77,19 @@ export const updateOrdersStatus = createAsyncThunk('orders/updateStatus', async 
   }
 })
 
+//Move in and out of Fiberglass
+export const fiberglassSignInAndOut = createAsyncThunk('orders/moveToFiberglass', async (ordersToUpdate, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.user.token
+
+    return await orderService.fiberglassSignInAndOut(ordersToUpdate, token)
+  } catch (error) {
+    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
 //Add comment to order
 export const addComment = createAsyncThunk('orders/addComment', async (commentData, thunkAPI) => {
   try {
@@ -160,7 +173,6 @@ export const orderSlice = createSlice({
           if(order._id === action.payload._id) {
             return action.payload
           }
-          return order
         })
       })
       .addCase(updateOrder.rejected, (state, action) => {
@@ -181,6 +193,23 @@ export const orderSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      .addCase(fiberglassSignInAndOut.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(fiberglassSignInAndOut.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.orders = state.orders.map((order) => {
+          if(action.meta.arg.ids.includes(order._id)) {
+            return order
+          }
+        })
+      })
+      .addCase(fiberglassSignInAndOut.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
       .addCase(addComment.pending, (state) => {
         state.isLoading = true
       })
@@ -190,8 +219,9 @@ export const orderSlice = createSlice({
         state.orders = state.orders.map((order) => {
           if(order._id === action.payload._id) {
             order.comments.push(action.meta.arg.newComment)
+
+            return order
           }
-          return order
         })
       })
       .addCase(addComment.rejected, (state, action) => {

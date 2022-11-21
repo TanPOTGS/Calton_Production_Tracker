@@ -114,6 +114,9 @@ const StyledHeader = styled.header`
   align-items: center;
   padding 15px 2%;
   background-color: #000000;
+  @media print {
+    display: none;
+  }
 `
 
 const StyledImg = styled.img`

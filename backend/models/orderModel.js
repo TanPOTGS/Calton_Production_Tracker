@@ -219,6 +219,10 @@ const OrderSchema = new Schema({
     default: ''
   },
   fiberglassDepartment: {
+    isSignedIn: {
+      type: Boolean,
+      default: false
+    },
     siDate: {
       type: Date,
       default: ''
@@ -226,6 +230,10 @@ const OrderSchema = new Schema({
     siEmployee: {
       type: String,
       default: ''
+    },
+    isSignedOut: {
+      type: Boolean,
+      default: false
     },
     soDate: {
       type: Date,

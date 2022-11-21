@@ -17,6 +17,7 @@ import Production from './pages/production';
 import ProductionCharts from './pages/productionCharts';
 import AdminCharts from './pages/adminCharts';
 import ReadyScan from './pages/readyScan';
+import PrintTest from './pages/printTest';
 import Header from './components/Header/Header';
 
 function App() {
@@ -76,82 +77,81 @@ function App() {
   return (
     <>
       <Router>
-        <div>
-          <Header />
-          <MainViewContainer>
-            <Routes>
-              <Route path='/' element={<Landing />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/dashboard' element={<Dashboard />}>
-                {/* <Route index element={<ProductionCharts />} /> */}
-                <Route path='production' element={<ProductionCharts />} />
-                <Route path='admin' element={<AdminCharts />} />
-              </Route>
-              <Route
-                path='/order-review'
-                element={<OrderReview 
-                  displayModal={displayModal}
-                  modalType={modalType}
-                  orderDataForModal={orderDataForModal}
-                  toggleCreateOrderModal={toggleCreateOrderModal}
-                  toggleDeleteOrderModal={toggleDeleteOrderModal}
-                  toggleEditOrderModal={toggleEditOrderModal}
-                  toggleEditContactInfoModal={toggleEditContactInfoModal}
-                  toggleAddCommentModal={toggleAddCommentModal}
-                  toggleAddOrderNoteModal={toggleAddOrderNoteModal}
-                  closeModal={closeModal}
-                />}
-              />
-              <Route
-                path='/orders-hold'
-                element={<OrdersHold
-                  displayModal={displayModal}
-                  modalType={modalType}
-                  orderDataForModal={orderDataForModal}
-                  toggleCreateOrderModal={toggleCreateOrderModal}
-                  toggleDeleteOrderModal={toggleDeleteOrderModal}
-                  toggleEditOrderModal={toggleEditOrderModal}
-                  toggleEditContactInfoModal={toggleEditContactInfoModal}
-                  toggleAddCommentModal={toggleAddCommentModal}
-                  toggleAddOrderNoteModal={toggleAddOrderNoteModal}
-                  closeModal={closeModal}
-                />}
-              />
-              <Route
-                path='/orders-closed'
-                element={<OrdersClosed 
-                  displayModal={displayModal}
-                  modalType={modalType}
-                  orderDataForModal={orderDataForModal}
-                  toggleCreateOrderModal={toggleCreateOrderModal}
-                  toggleDeleteOrderModal={toggleDeleteOrderModal}
-                  toggleEditOrderModal={toggleEditOrderModal}
-                  toggleEditContactInfoModal={toggleEditContactInfoModal}
-                  toggleAddCommentModal={toggleAddCommentModal}
-                  toggleAddOrderNoteModal={toggleAddOrderNoteModal}
-                  closeModal={closeModal}
-                />}
-              />
-              <Route
-                path='/production'
-                element={<Production 
-                  displayModal={displayModal}
-                  modalType={modalType}
-                  orderDataForModal={orderDataForModal}
-                  toggleCreateOrderModal={toggleCreateOrderModal}
-                  toggleDeleteOrderModal={toggleDeleteOrderModal}
-                  toggleEditOrderModal={toggleEditOrderModal}
-                  toggleEditContactInfoModal={toggleEditContactInfoModal}
-                  toggleAddCommentModal={toggleAddCommentModal}
-                  toggleAddOrderNoteModal={toggleAddOrderNoteModal}
-                  closeModal={closeModal}
-                />}
-              />
-              <Route path='/ready-scan' element={<ReadyScan />} />
-            </Routes>
-          </MainViewContainer>
-        </div>
+        <Header />
+        <MainViewContainer>
+          <Routes>
+            <Route path='/' element={<Landing />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/dashboard' element={<Dashboard />}>
+              {/* <Route index element={<ProductionCharts />} /> */}
+              <Route path='production' element={<ProductionCharts />} />
+              <Route path='admin' element={<AdminCharts />} />
+            </Route>
+            <Route
+              path='/order-review'
+              element={<OrderReview 
+                displayModal={displayModal}
+                modalType={modalType}
+                orderDataForModal={orderDataForModal}
+                toggleCreateOrderModal={toggleCreateOrderModal}
+                toggleDeleteOrderModal={toggleDeleteOrderModal}
+                toggleEditOrderModal={toggleEditOrderModal}
+                toggleEditContactInfoModal={toggleEditContactInfoModal}
+                toggleAddCommentModal={toggleAddCommentModal}
+                toggleAddOrderNoteModal={toggleAddOrderNoteModal}
+                closeModal={closeModal}
+              />}
+            />
+            <Route
+              path='/orders-hold'
+              element={<OrdersHold
+                displayModal={displayModal}
+                modalType={modalType}
+                orderDataForModal={orderDataForModal}
+                toggleCreateOrderModal={toggleCreateOrderModal}
+                toggleDeleteOrderModal={toggleDeleteOrderModal}
+                toggleEditOrderModal={toggleEditOrderModal}
+                toggleEditContactInfoModal={toggleEditContactInfoModal}
+                toggleAddCommentModal={toggleAddCommentModal}
+                toggleAddOrderNoteModal={toggleAddOrderNoteModal}
+                closeModal={closeModal}
+              />}
+            />
+            <Route
+              path='/orders-closed'
+              element={<OrdersClosed 
+                displayModal={displayModal}
+                modalType={modalType}
+                orderDataForModal={orderDataForModal}
+                toggleCreateOrderModal={toggleCreateOrderModal}
+                toggleDeleteOrderModal={toggleDeleteOrderModal}
+                toggleEditOrderModal={toggleEditOrderModal}
+                toggleEditContactInfoModal={toggleEditContactInfoModal}
+                toggleAddCommentModal={toggleAddCommentModal}
+                toggleAddOrderNoteModal={toggleAddOrderNoteModal}
+                closeModal={closeModal}
+              />}
+            />
+            <Route
+              path='/production'
+              element={<Production 
+                displayModal={displayModal}
+                modalType={modalType}
+                orderDataForModal={orderDataForModal}
+                toggleCreateOrderModal={toggleCreateOrderModal}
+                toggleDeleteOrderModal={toggleDeleteOrderModal}
+                toggleEditOrderModal={toggleEditOrderModal}
+                toggleEditContactInfoModal={toggleEditContactInfoModal}
+                toggleAddCommentModal={toggleAddCommentModal}
+                toggleAddOrderNoteModal={toggleAddOrderNoteModal}
+                closeModal={closeModal}
+              />}
+            />
+            <Route path='/ready-scan' element={<ReadyScan />} />
+            <Route path='/print-test' element={<PrintTest />} />
+          </Routes>
+        </MainViewContainer>
       </Router>
       <ToastContainer />
     </>
@@ -179,5 +179,17 @@ const MainViewContainer = styled.div`
   }
   &::-webkit-scrollbar-corner {
     background-color: #009879;
+  }
+  @media print {
+    display: block;
+    height: auto;
+    border: none;
+    margin: none;
+    padding: none;
+    overflow: none;
+    &::-webkit-scrollbar {
+      width: 0%;
+      height: 0%;
+    }
   }
 `

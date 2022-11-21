@@ -115,7 +115,6 @@ const updateOrder = asyncHandler(async (req, res) => {
 // @access  Private
 const updateOrdersStatus = asyncHandler(async (req, res) => {
   // const order = await Order.findById(req.params.id);
-  // const orders = await Order.find({ _id: req.user.id });
 
   // if(!order) {
   //   res.status(400)
@@ -126,6 +125,21 @@ const updateOrdersStatus = asyncHandler(async (req, res) => {
     orderCurrentState: req.params.status,
     productionReceivedDate: req.body.productionReceivedDate,
     shipByDate: req.body.shipByDate
+  }
+
+  const updatedOrders = await Order.updateMany({ _id: { $in: req.body.ids } }, { $set: data }, {
+    new: true,
+  });
+
+  res.status(200).json(updatedOrders);
+})
+
+// @desc  Update multiple orders
+// @route   PUT api/orders/:ids/updateFiberglassStatus
+// @access  Private
+const fiberglassSignInAndOut = asyncHandler(async (req, res) => {
+  const data = {
+    fiberglassDepartment: req.body.fiberglassDepartment
   }
 
   const updatedOrders = await Order.updateMany({ _id: { $in: req.body.ids } }, { $set: data }, {
@@ -190,6 +204,7 @@ module.exports = {
   createOrder,
   updateOrder,
   updateOrdersStatus,
+  fiberglassSignInAndOut,
   addComment,
   deleteOrder
 }

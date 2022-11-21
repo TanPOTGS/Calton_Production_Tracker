@@ -340,7 +340,7 @@ function OrdersClosed(props) {
             </StyledOrderTableHead>
             {orders.length > 0 ? (
               <StyledOrderTableBody>
-                {orders.map((order) => (order.orderCurrentState === "production" &&
+                {orders.map((order) => (order.orderCurrentState === "closed" &&
                   <OrderItemInProduction 
                     key={order._id}
                     order={order}

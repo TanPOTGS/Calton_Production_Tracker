@@ -15,6 +15,7 @@ import {
   getOrders,
   updateOrder,
   updateOrdersStatus,
+  fiberglassSignInAndOut,
   resetOrders
 } from '../features/orders/orderSlice';
 import {
@@ -220,6 +221,32 @@ function Production(props) {
     })
   }
 
+  const moveToFiberglassQueue = () => {
+    const selectedIds = []
+
+    selectedOrders.map((selectedOrder) => {
+      selectedIds.push(selectedOrder.orderId)
+    })
+
+    const dateMoved = new Date()
+
+    const movingOrders = {
+      ids: selectedIds,
+      fiberglassDepartment: {
+        isSignedIn: true,
+        siDate: dateMoved,
+        siEmployee: user.name,
+        isSignedOut: false,
+        soDate: '',
+        soEmployee: ''
+      }
+    }
+
+    dispatch(fiberglassSignInAndOut(movingOrders))
+    setSelectedOrders([])
+    clearSidebarState()
+  }
+
   if(isLoading) {
     return <Spinner />
   }
@@ -256,6 +283,16 @@ function Production(props) {
           cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
         >
           Move To Closed
+        </StyledMenuButton>
+        <StyledMenuButton
+          onClick={moveToFiberglassQueue}
+          disabled={selectedOrders.length < 1}
+          backgroundColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          borderColor={selectedOrders.length < 1 ? '#000000' : '#88f7ba'}
+          textColor={selectedOrders.length < 1 ? '#ffffff' : '#000000'}
+          cursor={selectedOrders.length < 1 ? 'default' : 'pointer'}
+        >
+          Move To Fiberglass Queue
         </StyledMenuButton>
         <StyledMenuButton
           onClick={() => toggleOrderColor('isMarigold')}

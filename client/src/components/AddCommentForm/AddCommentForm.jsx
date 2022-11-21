@@ -7,7 +7,6 @@ import {
   useDispatch
 } from 'react-redux';
 import {
-  getOrders,
   addComment
 } from '../../features/orders/orderSlice';
 import {
@@ -21,18 +20,23 @@ import styled from 'styled-components';
 function AddCommentForm(props) {
   const {
     closeModal,
-    orderDataForModal
+    orderDataForModal,
+    handleOrderNotesDisplay
   } = props
 
   const [formData, setFormData] = useState({
     _id: orderDataForModal._id,
     commentBody: '',
+    userSearch: '',
+    usersFound: false,
     commentRecipients: []
   })
   
   const {
     _id,
     commentBody,
+    userSearch,
+    usersFound,
     commentRecipients
   } = formData
 
@@ -64,8 +68,10 @@ function AddCommentForm(props) {
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
+      usersFound: false,
       [e.target.name]: e.target.value
     }))
+    
     // console.log(`Name: ${e.target.name} | Value: ${e.target.value}`)
   }
 
@@ -80,13 +86,16 @@ function AddCommentForm(props) {
       commentId = orderDataForModal.comments.length + 1
     }
 
+    let recipientsEmails = []
+    commentRecipients.map(r => recipientsEmails.push(r.email))
+
     const orderData = {
       _id,
       newComment: {
         commentId: commentId,
         body: commentBody,
         author: user.name,
-        recipients: commentRecipients
+        recipients: recipientsEmails
       }
     }
 
@@ -99,7 +108,7 @@ function AddCommentForm(props) {
           Username : "production@caltoncases.com",
           Password : "E867D55A347745D0BF4642EB6CBEC48BD6AB",
           Port: 2525,
-          To : commentRecipients,
+          To : recipientsEmails,
           From : user.email,
           Subject : "You were mentioned in a comment...",
           Body : commentBody
@@ -123,6 +132,67 @@ function AddCommentForm(props) {
         </h1>
       </StyledFormHeader>
       <StyledForm onSubmit={onSubmit}>
+        <StyledSearchContainer>
+          <StyledSearchLabel htmlFor="searchUsers">Notify someone:</StyledSearchLabel>
+          <StyledDropdownContainer>
+            <StyledSearchField 
+              type="search" 
+              name='userSearch'
+              id='searchUsers'
+              value={userSearch}
+              placeholder="Search user..."
+              onChange={onChange}
+            />
+            <StyledSearchFieldDropdown isVisible={usersFound ? "block" : "none"}>
+              <StyledUserList>
+                {users.filter((user) => {
+                  if(userSearch === "") {
+                    return null
+                  } else if(userSearch !== '' && user.name.toLowerCase().startsWith(userSearch.toLowerCase())) {
+                    return user
+                  } else if(userSearch !== '' && !user.name.toLowerCase().startsWith(userSearch.toLowerCase())) {
+                    return null
+                  }
+                }).map((user, key) => {
+                  if(!usersFound) {
+                    setFormData((prevState) => ({
+                      ...prevState,
+                      usersFound: true
+                    }))
+                  }
+                  return (
+                    <StyledUserName key={key} onClick={() => 
+                      setFormData((prevState) => ({
+                        ...prevState,
+                        commentRecipients: [...prevState.commentRecipients, user]
+                      }))
+                    }>
+                      {user.name}
+                    </StyledUserName>
+                  )
+                })}
+              </StyledUserList>
+            </StyledSearchFieldDropdown>
+          </StyledDropdownContainer>
+        </StyledSearchContainer>
+        <StyledUsersContainer>
+          {commentRecipients.map((r, i) => {
+            return (
+              <StyledRecipient key={i}>
+                <StyledRecipientName>{r.name}</StyledRecipientName>
+                <StyledRecipientRemove onClick={() => 
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    commentRecipients: prevState.commentRecipients.filter((rr) => rr.name !== r.name)
+                  }))
+                  // console.log("I've been removed")
+                }>
+                  x
+                </StyledRecipientRemove>
+              </StyledRecipient>
+            )
+          })}
+        </StyledUsersContainer>
         <StyledFormGroup>
           <StyledTextInput 
             type="text" 
@@ -175,6 +245,99 @@ const StyledForm = styled.form`
   box-sizing: border-box;
 `
 
+const StyledSearchContainer = styled.div`
+  position: relative;
+  display: flex;
+  margin: 30px 0;
+  padding: 0 5px;
+`
+
+const StyledDropdownContainer = styled.div`
+  position: relative;
+`
+
+const StyledSearchFieldDropdown = styled.div`
+  display: ${props => props.isVisible};
+  background-color: #ffffff;
+  left: 10px;
+  z-index: 10;
+  position: absolute;
+  border: 1px solid #000000;
+  height: 100px;
+  width: 300px;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: .5vw;
+    height: 1vh;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #88f7ba;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #afafaf;
+  }
+  &::-webkit-scrollbar-corner {
+    background-color: #afafaf;
+  }
+`
+
+const StyledSearchField = styled.input`
+  height: 30px;
+  width: 300px;
+  border: none;
+  margin: 0 10px;
+  border-bottom: 2px solid #afafaf;
+  outline: none;
+  font-size: 20px;
+`
+
+const StyledSearchLabel = styled.label`
+  color: #009879;
+  font-size: 20px;
+  pointer-events: none;
+`
+
+const StyledUsersContainer = styled.div`
+  position: relative;
+  margin: 30px 0;
+  padding: 0 5px;
+  height: 150px;
+  display: flex;
+  align-items: flex-start;
+`
+
+const StyledRecipient = styled.div`
+  display: flex;
+  background-color: #e8e8e8;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin: 0 3px;
+`
+
+const StyledRecipientName = styled.p`
+  font-size: 18px;
+`
+
+const StyledRecipientRemove = styled.span`
+  cursor: pointer;
+  margin: 0 5px;
+  font-weight: 700;
+`
+
+const StyledUserList = styled.ul`
+  list-style-type: none;
+`
+
+const StyledUserName = styled.li`
+  margin: 10px 0;
+  padding: 5px;
+  font-weight: 700;
+  &:hover {
+    background-color: #e8e8e8;
+  }
+`
+
 const StyledFormGroup = styled.div`
   position: relative;
   border-bottom: 2px solid #afafaf;
@@ -190,29 +353,9 @@ const StyledTextInput = styled.textarea`
   border: none;
   background: none;
   outline: none;
-  // &:focus ~ label {
-  //   top: -5px;
-  //   color: #009879;
-  // }
   &:valid ~ label {
     top: -5px;
     color: #009879;
-  }
-  // &:focus ~ span:before {
-  //   width: 100%;
-  // }
-`
-
-const StyledFormSpan = styled.span`
-  &:before {
-    content: '';
-    position: absolute;
-    top: 40px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background: #009879;
-    transition: .4s;
   }
 `
 
@@ -222,7 +365,7 @@ const StyledFormLabel = styled.label`
   left: 5px;
   color: #000000;
   transform: translateY(-50%);
-  font-size: 16px;
+  font-size: 20px;
   pointer-events: none;
   transition: .4s;
 `

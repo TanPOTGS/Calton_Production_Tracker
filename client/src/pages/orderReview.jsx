@@ -464,7 +464,7 @@ function OrderReview(props) {
                       <>
                         <p>People Tagged:</p>
                         <ul>
-                          {comment.commentRecipients.map((recipient) => (
+                          {comment.recipients.map((recipient) => (
                             <li>{recipient}</li>
                           ))}
                         </ul>
